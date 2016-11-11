@@ -1,15 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="md-modal md-effect-1" id="add-book-modal">
-    <div class="md-content">
-    	<div class="form-group">
-            <h2>Sök bok</h2>
-			<input id="book-title" type="text" class="form-control">
-		</div>
-    </div>
-    <div id="result" class="md-content"></div>
-</div>
 <div class="md-overlay"></div>
 <div class="container">
     <div class="row">
