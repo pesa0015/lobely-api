@@ -8,10 +8,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
+    <title>Read with who</title>
+    
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -35,16 +36,20 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                    <a id="logo" class="navbar-brand" href="/">
+                        <span id="read">read</span>
+                        <span id="with">with</span>
+                        <span id="who">who</span>
                     </a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
+                    <div id="search-box" class="nav navbar-nav">
+                        <form action="/search" method="GET">
+                            <input type="text" name="search" id="search" class="form-control" placeholder="Sök bok">
+                        </form>
+                    </div>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
@@ -82,6 +87,10 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
+    <script src="/vendor/niftymodal/classie.js"></script>
+    <script src="/vendor/niftymodal/modalEffects.js"></script>
     <script src="/js/script.js"></script>
 </body>
 </html>

@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Romanesco|Source+Sans+Pro:200');
+#app {
+	text-align: center;
+    position: fixed;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -100%);
+}
+#with {
+	font-family: 'Romanesco', cursive;
+	font-size: 37px;
+}
+#read, #who, div {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 27px;
+}

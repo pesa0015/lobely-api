@@ -26,6 +26,6 @@ class UserController extends Controller
     public function dashboard()
     {
         $my_books = Bookshelf::with('book')->where('user_id', Auth::user()->id)->get();
-        return view('home', ['my_books' => $my_books]);
+        return view('bookshelf', ['my_books' => $my_books]);
     }
 }

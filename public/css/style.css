@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css?family=Prociono|Romanesco|Source+Sans+Pro:200,300');
+body {
+	font-family: 'Source Sans Pro', sans-serif;
+}
+#logo {
+	margin: 0 70px 0 -100px;
+}
+#with {
+	font-family: 'Romanesco', cursive;
+	font-size: 37px;
+}
+#read, #who {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 27px;
+}
+#read, #with, #who {
+	
+}
+#search-box {
+	height: 50px;
+}
+#search {
+	height: 40px;
+	margin: 5px 0 5px 35px;
+}
+h1 {
+	display: inline-block;
+}
+.container {
+	background: inherit;
+}
+.md-content {
+	background: #C5A1A0;
+}
+.md-overlay {
+	background: rgba(255,255,255,0.8);
+}
+.book {
+	margin: 20px 0 20px 0;
+	padding: 10px 0 10px 0;
+}
+.cover {
+	width: 100px;
+	height: 150px;
+	display: inline-block;
+}
+.cover img {
+	width: inherit;
+	height: inherit;
+}
+#large-cover {
+	height: 250px;
+	width: 170px;
+	display: block;
+	margin: auto;
+}
+.title {
+	font-size: 21px;
+	display: inline-block;
+	width: 500px;
+	margin: 0 0 0 30px;
+}
+.save-to-bookshelf {
+	float: right;
+}
+.dashboard-book-cover {
+	margin: 0 10px 0 10px;
+}
+#book-page #author {
+	display: inline-block;
+}
+.saved {
+	display: inline-block;
+	float: right;
+}
+.is-saved {
+	display: inline-block;
+	margin: 0 10px 0 0;
+    padding: 0 10px 0 0;
+    border-right: 1px solid #000000;
+}
+.remove-from-bookshelf {
+	cursor: pointer;
+}
+.remove-from-bookshelf:hover {
+	text-decoration: underline;
+}

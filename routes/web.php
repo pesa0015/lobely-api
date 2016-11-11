@@ -12,7 +12,11 @@
 */
 
 Route::get('/', 'HomeController@index');
-Route::get('home', 'UserController@dashboard');
+Route::get('bookshelf', 'UserController@dashboard');
+Route::get('search', 'SearchController@search');
+Route::get('book/{slug}', 'BookController@showBook');
+Route::post('save-to-bookshelf', 'BookController@save');
+Route::post('remove-from-bookshelf', 'BookController@remove');
 
 Route::get('auth/facebook', 'Auth\LoginController@redirectToProvider');
 Route::get('auth/facebook/callback', 'Auth\LoginController@handleProviderCallback');

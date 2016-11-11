@@ -77,7 +77,7 @@ class LoginController extends Controller
             Auth::login($newUser);
         }
 
-        return Redirect::to('home');
+        return Redirect::to('bookshelf');
     }
 
     public function showLoginForm()
