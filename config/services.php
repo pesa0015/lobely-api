@@ -38,7 +38,7 @@ return [
     'facebook' => [
         'client_id' => '312625885791091',
         'client_secret' => 'a9e2c53213b01927e1ec2fdf5739e00d',
-        'redirect' => 'http://readlove.dev/auth/facebook/callback',
+        'redirect' => 'http://beta-readlove.com/auth/facebook/callback',
     ],
 
 ];
