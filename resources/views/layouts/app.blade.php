@@ -8,11 +8,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Read with who</title>
+    <title>Blooovy</title>
     
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="/img/heart.png"/>
 
     <!-- Scripts -->
     <script>

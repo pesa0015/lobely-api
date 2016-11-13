@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>read with who</title>
+    <title>Blooovy</title>
     
     <!-- vendor -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -17,6 +17,7 @@
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
     <link href="/css/start.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="/img/heart.png"/>
 
     <!-- Scripts -->
     <script>
