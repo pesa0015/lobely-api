@@ -1,10 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Romanesco|Source+Sans+Pro:200');
+body {
+	/*background: url(https://images.unsplash.com/photo-1478033332825-3418438ab019?dpr=2&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=);*/
+	/*background: url(https://static.pexels.com/photos/175994/pexels-photo-175994.jpeg) center; */
+	background: url(https://static.pexels.com/photos/5833/nature-grass-green-book.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+}
 #app {
-	text-align: center;
-    position: fixed;
-  	top: 50%;
-  	left: 50%;
-  	transform: translate(-50%, -100%);
+	text-align: right;
+	margin: 2% 12% 0 0;
+	color: #C9E3C9;
+    /*position: fixed;*/
+  	/*top: 50%;*/
+  	/*left: 50%;*/
+  	/*transform: translate(-50%, -100%);*/
 }
 #with {
 	font-family: 'Romanesco', cursive;

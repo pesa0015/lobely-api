@@ -27,10 +27,8 @@
 </head>
 <body>
     <div id="app">
-        <span id="read">read</span>
-        <span id="with">with</span>
-        <span id="who">who</span>
-        <div>Hitta ditt livs kärlek baserat på böckerna du gillar.</div>
+        <img src="/img/blooovy.png" alt="">
+        <div>Hitta din partner baserat på böckerna du gillar.</div>
         <div>Det är enkelt. Logga in med Facebook bara.</div>
         <a href="/auth/facebook" class="btn btn-social-icon btn-facebook">
             <span class="fa fa-facebook"></span>

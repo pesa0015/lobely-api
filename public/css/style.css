@@ -5,6 +5,9 @@ body {
 #logo {
 	margin: 0 70px 0 -100px;
 }
+#logo img {
+	height: 30px;
+}
 #with {
 	font-family: 'Romanesco', cursive;
 	font-size: 37px;

@@ -37,9 +37,7 @@
 
                     <!-- Branding Image -->
                     <a id="logo" class="navbar-brand" href="/">
-                        <span id="read">read</span>
-                        <span id="with">with</span>
-                        <span id="who">who</span>
+                        <img src="/img/blooovy.png" alt="">
                     </a>
                 </div>
 
@@ -87,6 +85,7 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
     <script src="/vendor/niftymodal/classie.js"></script>
