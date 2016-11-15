@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\RedirectResponse;
 
 class LoginController extends Controller
 {
@@ -49,7 +50,12 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {
-        $user = \Socialite::driver('facebook')->user();
+
+        try {
+            $user = \Socialite::driver('facebook')->user();
+        } catch (\Exception $e) {
+            return redirect('/');
+        }
 
         // OAuth Two Providers
         $token = $user->token;
