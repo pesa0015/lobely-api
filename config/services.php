@@ -36,9 +36,9 @@ return [
     ],
 
     'facebook' => [
-        'client_id' => '312625885791091',
-        'client_secret' => 'a9e2c53213b01927e1ec2fdf5739e00d',
-        'redirect' => 'http://beta-readlove.com/auth/facebook/callback',
-    ],
+        'client_id' => env('FB_APP_ID'),
+        'client_secret' => env('FB_APP_SECRET'),
+        'redirect' => env('FB_REDIRECT')
+    ]
 
 ];
