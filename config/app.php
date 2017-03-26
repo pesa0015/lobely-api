@@ -169,6 +169,7 @@ return [
 
         Laravel\Socialite\SocialiteServiceProvider::class,
         'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
+        Barryvdh\Cors\ServiceProvider::class,
 
         //
 
