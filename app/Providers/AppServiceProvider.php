@@ -23,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // $this->app->singleton('Faker', function($app) {
+        //     $faker = \Faker\Factory::create();
+            
+        //     $faker->addProvider(new \Faker\Provider\Book($faker));
+        //     return $faker;
+        // });
     }
 }

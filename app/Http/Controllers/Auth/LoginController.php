@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Auth;
-use App\User;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Http\RedirectResponse;
+// use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class LoginController extends Controller
 {
@@ -31,69 +29,32 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('jwt.auth', ['except' => 'login']);
     }
 
-    /**
-     * Redirect the user to the GitHub authentication page.
-     *
-     * @return Response
-     */
-    public function redirectToProvider()
+    public function login(Request $request)
     {
-        return \Socialite::driver('facebook')->redirect();
-    }
-
-    /**
-     * Obtain the user information from GitHub.
-     *
-     * @return Response
-     */
-    public function handleProviderCallback()
-    {
+        // grab credentials from the request
+        $credentials = $request->only('email', 'password');
 
         try {
-            $user = \Socialite::driver('facebook')->user();
-        } catch (\Exception $e) {
-            return redirect('/');
+            // attempt to verify the credentials and create a token for the user
+            if (! $token = JWTAuth::attempt($credentials)) {
+                return response()->json(['error' => 'invalid_credentials'], 401);
+            }
+        } catch (JWTException $e) {
+            // something went wrong whilst attempting to encode the token
+            return response()->json(['error' => 'could_not_create_token'], 500);
         }
 
-        // OAuth Two Providers
-        $token = $user->token;
-        $expiresIn = $user->expiresIn;
-
-        $userExists = User::where('facebook_id', $user->id)->first();
-
-        if ($userExists) {
-            $userExists->name = $user->getName();
-            $userExists->email = $user->getEmail();
-            $userExists->gender = $user->user['gender'];
-            $userExists->update();
-
-            Auth::login($userExists);
-        }
-        else {
-            $newUser = new User;
-
-            $newUser->name = $user->getName();
-            $newUser->email = $user->getEmail();
-            $newUser->gender = $user->user['gender'];
-            $newUser->facebook_id = $user->getId();
-            $newUser->save();
-
-            Auth::login($newUser);
-        }
-
-        return Redirect::to('bookshelf');
-    }
-
-    public function showLoginForm()
-    {
-        return view('auth.login');
+        // all good so return the token
+        return response()->json(compact('token'));
     }
 
     public function logout()
     {
-        Auth::logout();
-        return Redirect::to('/');
+        JWTAuth::invalidate(JWTAuth::getToken());
+
+        return response()->json([], 200);
     }
 }
