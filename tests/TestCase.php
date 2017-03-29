@@ -20,6 +20,25 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
+        config(['database.default' => 'testing']);
+
         return $app;
+    }
+
+    public function setUp()
+    {
+        parent::setUp();
+        Artisan::call('migrate');
+    }
+
+    public function callHttpWithToken($method, $url, $token, $param = [])
+    {
+        $server = [
+            'HTTP_Authorization' => 'Bearer ' . $token
+        ];
+        $response = $this->call($method, $url, $param, [], [], $server);
+        
+        // $token = str_replace('Bearer ', '', $response->headers->get('authorization'));
+        return (object) ['data' => $response->getData()];
     }
 }
