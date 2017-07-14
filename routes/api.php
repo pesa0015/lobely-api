@@ -15,3 +15,7 @@ use Illuminate\Http\Request;
 
 Route::post('/auth', 'Auth\LoginController@login');
 Route::post('/logout', 'Auth\LoginController@logout');
+
+Route::group(['middleware' => 'jwt.auth'], function() {
+    Route::get('search', 'SearchController@search');
+});
