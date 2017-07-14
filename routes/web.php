@@ -11,7 +11,6 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
 Route::get('bookshelf', 'UserController@dashboard');
 Route::get('search', 'SearchController@search');
 Route::get('book/{slug}', 'BookController@showBook');
