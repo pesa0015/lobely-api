@@ -34,16 +34,40 @@ class UserTest extends TestCase
     }
 
     /**
-     * @group login
+     * @group loginExistingUser
      * Tests login
      */
-    public function testLogin()
+    public function testLoginAsExistingUser()
     {
         $user = $this->newUser(false, true);
 
-        $this->call('POST', '/api/auth', [
+        $this->call('POST', '/api/auth/facebook', [
+            'facebook_id' => $user->user->facebook_id,
+            'name' => $user->user->name,
             'email' => $user->user->email,
+            'gender' => $user->user->gender,
             'password' => $user->password
+        ]);
+
+        $this->seeJsonStructure([
+            'token'
+        ]);
+    }
+
+    /**
+     * @group loginNewUser
+     * Tests login
+     */
+    public function testLoginAsNewUser()
+    {
+        $user = $this->newUser(false, true);
+
+        $this->call('POST', '/api/auth/facebook', [
+            'facebook_id' => 2,
+            'name' => 'Test',
+            'email' => 'test@gmail.com',
+            'gender' => 'male',
+            'password' => 'test'
         ]);
 
         $this->seeJsonStructure([
@@ -59,8 +83,11 @@ class UserTest extends TestCase
     {
         $user = $this->newUser(false, true);
 
-        $token = $this->call('POST', '/api/auth', [
+        $token = $this->call('POST', '/api/auth/facebook', [
+            'facebook_id' => $user->user->facebook_id,
+            'name' => $user->user->name,
             'email' => $user->user->email,
+            'gender' => $user->user->gender,
             'password' => $user->password
         ])->getData()->token;
 

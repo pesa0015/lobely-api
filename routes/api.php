@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('/auth', 'Auth\LoginController@login');
+Route::post('/auth/facebook', 'Auth\LoginController@loginWithFacebook');
 Route::post('/logout', 'Auth\LoginController@logout');
 Route::post('/register', 'Auth\RegisterController@store');
 

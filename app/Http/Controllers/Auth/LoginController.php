@@ -30,10 +30,10 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest', ['except' => 'logout']);
-        $this->middleware('jwt.auth', ['except' => 'login']);
+        $this->middleware('jwt.auth', ['except' => 'loginWithFacebook']);
     }
 
-    public function login(Request $request)
+    public function loginWithFacebook(Request $request)
     {
         $user = User::where('facebook_id', $request->facebook_id)->first();
 
@@ -46,20 +46,9 @@ class LoginController extends Controller
                 // 'password' => bcrypt($request->password)
             ]);
         }
-        // grab credentials from the request
-        $credentials = $request->only('email', 'password');
+        
+        $token = JWTAuth::fromUser($user);
 
-        try {
-            // attempt to verify the credentials and create a token for the user
-            if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 401);
-            }
-        } catch (JWTException $e) {
-            // something went wrong whilst attempting to encode the token
-            return response()->json(['error' => 'could_not_create_token'], 500);
-        }
-
-        // all good so return the token
         return response()->json(compact('token'));
     }
 
