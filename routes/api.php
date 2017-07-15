@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::post('/auth/facebook', 'Auth\LoginController@loginWithFacebook');
+Route::post('/auth', 'Auth\LoginController@authenticate');
 Route::post('/logout', 'Auth\LoginController@logout');
 Route::post('/register', 'Auth\RegisterController@store');
 
