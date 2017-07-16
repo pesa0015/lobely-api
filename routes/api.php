@@ -18,6 +18,7 @@ Route::post('/auth', 'Auth\LoginController@authenticate');
 Route::post('/logout', 'Auth\LoginController@logout');
 Route::post('/register', 'Auth\RegisterController@store');
 Route::post('/forgot-password', 'Auth\ForgotPasswordController@store');
+Route::post('/reset-password', 'Auth\ResetPasswordController@update');
 
 Route::group(['middleware' => 'jwt.auth'], function() {
     Route::get('search', 'SearchController@search');

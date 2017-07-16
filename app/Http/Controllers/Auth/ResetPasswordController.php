@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
+use App\User;
+use App\PasswordReset;
+use Illuminate\Support\Facades\Mail;
 
 class ResetPasswordController extends Controller
 {
@@ -18,15 +21,23 @@ class ResetPasswordController extends Controller
     |
     */
 
-    use ResetsPasswords;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function update(Request $request)
     {
-        $this->middleware('guest');
+        $token = PasswordReset::where('token', $request->token)->firstOrFail();
+
+        $user = User::findOrFail($token->user_id);
+        $user->password = bcrypt($request->password);
+        $user->update();
+
+        $token->delete();
+
+        Mail::send('emails.reset-password', [], function ($message)
+        use ($user)
+        {
+            $message->from(env('MAIL_ADDRESS'), env('MAIL_NAME'));
+            $message->to($user->email);
+        });
+
+        return response()->json([], 200);
     }
 }
