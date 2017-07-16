@@ -113,4 +113,25 @@ class UserTest extends TestCase
 
         $this->assertResponseOk();
     }
+
+    /**
+     * @group forgotPassword
+     * Tests send token for reset password
+     */
+    public function testForgotPassword()
+    {
+        $user = factory(App\User::class)->create([
+            'email' => 'peters945@hotmail.com'
+        ]);
+
+        \Mail::shouldReceive('send')->once()->andReturnUsing(function($view, $content) {
+            $this->assertEquals('emails.forgot-password', $view);
+        });
+
+        $response = $this->call('POST', '/api/forgot-password', [
+            'email' => $user->email
+        ]);
+
+        $this->assertResponseOk();
+    }
 }

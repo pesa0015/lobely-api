@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Request;
+use App\User;
+use App\PasswordReset;
+use Illuminate\Support\Facades\Mail;
 
 class ForgotPasswordController extends Controller
 {
@@ -18,15 +21,24 @@ class ForgotPasswordController extends Controller
     |
     */
 
-    use SendsPasswordResetEmails;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function store(Request $request)
     {
-        $this->middleware('guest');
+        $user = User::where('email', $request->email)->firstOrFail();
+
+        $token = str_random(20);
+
+        PasswordReset::create([
+            'user_id' => $user->id,
+            'token'   => $token
+        ]);
+
+        $url = env('APP_URL') . '/reset-password';
+
+        Mail::send('emails.forgot-password', ['url' => $url, 'token' => $token], function ($message)
+        use ($user)
+        {
+            $message->from(env('MAIL_ADDRESS'), env('MAIL_NAME'));
+            $message->to($user->email);
+        });
     }
 }
