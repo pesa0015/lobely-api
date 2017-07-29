@@ -45,7 +45,7 @@ class UserTest extends TestCase
     {
         $user = $this->newUser(false, true);
 
-        $response = $this->call('POST', '/api/auth/facebook', [
+        $response = $this->call('POST', '/auth/facebook', [
             'facebook_id' => $user->user->facebook_id,
             'name' => $user->user->name,
             'email' => $user->user->email,
@@ -66,7 +66,7 @@ class UserTest extends TestCase
     {
         $user = $this->newUser(false, true);
 
-        $response = $this->call('POST', '/api/auth/facebook', [
+        $response = $this->call('POST', '/auth/facebook', [
             'facebook_id' => 2,
             'name' => 'Test',
             'email' => 'test@gmail.com',
@@ -87,7 +87,7 @@ class UserTest extends TestCase
     {
         $user = $this->newUser(false, true);
 
-        $response = $this->call('POST', '/api/auth', [
+        $response = $this->call('POST', '/auth', [
             'email' => $user->user->email,
             'password' => $user->password
         ]);
@@ -105,7 +105,7 @@ class UserTest extends TestCase
     {
         $user = $this->newUser(false, true);
 
-        $token = $this->call('POST', '/api/auth/facebook', [
+        $token = $this->call('POST', '/auth/facebook', [
             'facebook_id' => $user->user->facebook_id,
             'name' => $user->user->name,
             'email' => $user->user->email,
@@ -113,7 +113,7 @@ class UserTest extends TestCase
             'password' => $user->password
         ])->getData()->token;
 
-        $response = $this->callHttpWithToken('POST', '/api/logout', $token);
+        $response = $this->callHttpWithToken('POST', '/logout', $token);
 
         $response->assertStatus(200);
     }
@@ -132,7 +132,7 @@ class UserTest extends TestCase
             $this->assertEquals('emails.forgot-password', $view);
         });
 
-        $response = $this->call('POST', '/api/forgot-password', [
+        $response = $this->call('POST', '/forgot-password', [
             'email' => $user->email
         ]);
 
@@ -149,7 +149,7 @@ class UserTest extends TestCase
             'email' => 'peters945@hotmail.com'
         ]);
 
-        $response = $this->call('POST', '/api/forgot-password', [
+        $response = $this->call('POST', '/forgot-password', [
             'email' => $user->email
         ]);
 
@@ -159,7 +159,7 @@ class UserTest extends TestCase
 
         $token = \App\PasswordReset::where('user_id', $user->id)->first()->token;
 
-        $response = $this->call('POST', '/api/reset-password', [
+        $response = $this->call('POST', '/reset-password', [
             'token'    => $token,
             'password' => 'Test123'
         ]);
