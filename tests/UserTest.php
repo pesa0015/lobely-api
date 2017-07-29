@@ -6,6 +6,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\User;
 
 class UserTest extends TestCase
 {
@@ -24,9 +25,9 @@ class UserTest extends TestCase
         $JWTToken = null;
         
         if ($admin)
-            $user = factory(App\User::class)->states('admin')->create();
+            $user = factory(User::class)->states('admin')->create();
         else
-            $user = factory(App\User::class)->create();
+            $user = factory(User::class)->create();
 
         if ($token)
             $JWTToken = \JWTAuth::fromUser($user);
@@ -123,7 +124,7 @@ class UserTest extends TestCase
      */
     public function testForgotPassword()
     {
-        $user = factory(App\User::class)->create([
+        $user = factory(User::class)->create([
             'email' => 'peters945@hotmail.com'
         ]);
 
@@ -144,7 +145,7 @@ class UserTest extends TestCase
      */
     public function testResetPassword()
     {
-        $user = factory(App\User::class)->create([
+        $user = factory(User::class)->create([
             'email' => 'peters945@hotmail.com'
         ]);
 
