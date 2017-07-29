@@ -45,7 +45,7 @@ class UserTest extends TestCase
     {
         $user = $this->newUser(false, true);
 
-        $this->call('POST', '/api/auth/facebook', [
+        $response = $this->call('POST', '/api/auth/facebook', [
             'facebook_id' => $user->user->facebook_id,
             'name' => $user->user->name,
             'email' => $user->user->email,
@@ -53,7 +53,7 @@ class UserTest extends TestCase
             'password' => $user->password
         ]);
 
-        $this->seeJsonStructure([
+        $response->assertJsonStructure([
             'token'
         ]);
     }
@@ -66,7 +66,7 @@ class UserTest extends TestCase
     {
         $user = $this->newUser(false, true);
 
-        $this->call('POST', '/api/auth/facebook', [
+        $response = $this->call('POST', '/api/auth/facebook', [
             'facebook_id' => 2,
             'name' => 'Test',
             'email' => 'test@gmail.com',
@@ -74,7 +74,7 @@ class UserTest extends TestCase
             'password' => 'test'
         ]);
 
-        $this->seeJsonStructure([
+        $response->assertJsonStructure([
             'token'
         ]);
     }
@@ -87,12 +87,12 @@ class UserTest extends TestCase
     {
         $user = $this->newUser(false, true);
 
-        $this->call('POST', '/api/auth', [
+        $response = $this->call('POST', '/api/auth', [
             'email' => $user->user->email,
             'password' => $user->password
         ]);
 
-        $this->seeJsonStructure([
+        $response->assertJsonStructure([
             'token'
         ]);
     }
@@ -113,9 +113,9 @@ class UserTest extends TestCase
             'password' => $user->password
         ])->getData()->token;
 
-        $this->callHttpWithToken('POST', '/api/logout', $token);
+        $response = $this->callHttpWithToken('POST', '/api/logout', $token);
 
-        $this->assertResponseOk();
+        $response->assertStatus(200);
     }
 
     /**
@@ -136,7 +136,7 @@ class UserTest extends TestCase
             'email' => $user->email
         ]);
 
-        $this->assertResponseOk();
+        $response->assertStatus(200);
     }
 
     /**
@@ -164,6 +164,6 @@ class UserTest extends TestCase
             'password' => 'Test123'
         ]);
 
-        $this->assertResponseOk();
+        $response->assertStatus(200);
     }
 }
