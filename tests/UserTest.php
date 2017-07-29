@@ -200,4 +200,57 @@ class UserTest extends TestCase
             'bio'   => $payload['bio']
         ]);
     }
+
+    /**
+     * @group emailAlreadyUsed
+     * Tests using email already used
+     */
+    public function testEmailAlreadyUsed()
+    {
+        $user = factory(User::class)->create([
+            'email' => 'peters945@hotmail.com'
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'id'    => $user->id,
+            'email' => $user->email
+        ]);
+
+        $newUserWithSameEmail = [
+            'name'     => 'Peter Sall',
+            'email'    => 'peters945@hotmail.com',
+            'gender'   => 'male',
+            'password' => 'Test123'
+        ];
+
+        $response = $this->call('POST', '/register', $newUserWithSameEmail);
+
+        $response->assertStatus(422);
+
+        $response->assertJsonFragment([
+            'email' => [
+                0 => 'The email has already been taken.'
+            ]
+        ]);
+
+        $newUserWithSameEmail['email'] = 'new@example.com';
+
+        $response = $this->call('POST', '/register', $newUserWithSameEmail);
+
+        $response->assertStatus(200);
+        $userId = $response->getData()->id;
+
+        $newUserWithSameEmail['email'] = 'peters945@hotmail.com';
+        $token = \JWTAuth::fromUser(User::findOrFail($userId));
+
+        $response = $this->callHttpWithToken('PATCH', '/user/profile/update/' . $userId, $token, $newUserWithSameEmail);
+
+        $response->assertStatus(422);
+
+        $response->assertJsonFragment([
+            'email' => [
+                0 => 'The email has already been taken.'
+            ]
+        ]);
+    }
 }
