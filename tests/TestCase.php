@@ -41,6 +41,6 @@ abstract class TestCase extends \Illuminate\Foundation\Testing\TestCase
         $response = $this->call($method, $url, $param, [], [], $server);
         
         // $token = str_replace('Bearer ', '', $response->headers->get('authorization'));
-        return (object) ['data' => $response->getData()];
+        return $response;
     }
 }
