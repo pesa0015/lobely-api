@@ -166,4 +166,38 @@ class UserTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    /**
+     * @group updateProfile
+     * Tests update profile
+     */
+    public function testUpdateProfile()
+    {
+        $user = $this->newUser(true);
+
+        $payload = [
+            'name'  => $user->user->name,
+            'gender' => $user->user->gender,
+            'interested_in_gender' => $user->user->interested_in_gender,
+            'birth_date' => $user->user->birth_date,
+            'email' => 'test@example.com',
+            'bio'   => 'Some text about me'
+        ];
+
+        $this->assertDatabaseHas('users', [
+            'id'    => $user->user->id,
+            'email' => $user->user->email,
+            'bio'   => $user->user->bio
+        ]);
+
+        $response = $this->callHttpWithToken('PATCH', '/user/profile/update/' . $user->user->id, $user->token, $payload);
+
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('users', [
+            'id'    => $user->user->id,
+            'email' => $payload['email'],
+            'bio'   => $payload['bio']
+        ]);
+    }
 }
