@@ -8,7 +8,7 @@ class UpdateUserRequest extends Request
 {
     protected $rules = [
         'name'  => 'required|string',
-        'email' => 'required|email',
+        'email' => 'email|unique:users',
         'gender' => 'required|string',
         'interested_in_gender' => 'required|string',
         'birth_date' => 'required'
