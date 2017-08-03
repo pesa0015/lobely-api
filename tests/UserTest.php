@@ -233,17 +233,18 @@ class UserTest extends TestCase
             ]
         ]);
 
-        $newUserWithSameEmail['email'] = 'new@example.com';
+        $newUserWithDifferentEmail = $newUserWithSameEmail;
+        $newUserWithDifferentEmail['email'] = 'new@example.com';
 
-        $response = $this->call('POST', '/register', $newUserWithSameEmail);
+        $response = $this->call('POST', '/register', $newUserWithDifferentEmail);
 
         $response->assertStatus(200);
         $userId = $response->getData()->id;
 
-        $newUserWithSameEmail['email'] = 'peters945@hotmail.com';
+        $updateUser = $newUserWithSameEmail;
         $token = \JWTAuth::fromUser(User::findOrFail($userId));
 
-        $response = $this->callHttpWithToken('PATCH', '/user/profile/update/' . $userId, $token, $newUserWithSameEmail);
+        $response = $this->callHttpWithToken('PATCH', '/user/profile/update/' . $userId, $token, $updateUser);
 
         $response->assertStatus(422);
 
