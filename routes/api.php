@@ -20,10 +20,10 @@ Route::post('/register', 'Auth\RegisterController@store');
 Route::post('/forgot-password', 'Auth\ForgotPasswordController@store');
 Route::post('/reset-password', 'Auth\ResetPasswordController@update');
 
-Route::group(['middleware' => ['jwt.auth', 'getUserFromToken']], function() {
+Route::group(['middleware' => ['jwt.auth', 'getUserFromToken']], function () {
     Route::get('search', 'SearchController@search');
 
-    Route::group(['prefix' => 'user'], function() {
+    Route::group(['prefix' => 'user'], function () {
         Route::patch('/profile/update/{id}', 'UserController@updateProfile');
     });
 });
