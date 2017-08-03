@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\PasswordReset;
-use Illuminate\Support\Facades\Mail;
+use App\Mail\CustomMail;
 
 class ForgotPasswordController extends Controller
 {
@@ -34,11 +34,7 @@ class ForgotPasswordController extends Controller
 
         $url = env('APP_URL') . '/reset-password';
 
-        Mail::send('emails.forgot-password', ['url' => $url, 'token' => $token], function ($message)
-        use ($user)
-        {
-            $message->from(env('MAIL_ADDRESS'), env('MAIL_NAME'));
-            $message->to($user->email);
-        });
+        $mail = new CustomMail();
+        $mail->send('emails.forgot-password', $user->email, ['url' => $url, 'token' => $token]);
     }
 }

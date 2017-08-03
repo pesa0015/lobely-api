@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\PasswordReset;
-use Illuminate\Support\Facades\Mail;
+use App\Mail\CustomMail;
 
 class ResetPasswordController extends Controller
 {
@@ -31,12 +31,8 @@ class ResetPasswordController extends Controller
 
         $token->delete();
 
-        Mail::send('emails.reset-password', [], function ($message)
-        use ($user)
-        {
-            $message->from(env('MAIL_ADDRESS'), env('MAIL_NAME'));
-            $message->to($user->email);
-        });
+        $mail = new CustomMail();
+        $mail->send('emails.reset-password', $user->email);
 
         return response()->json([], 200);
     }
