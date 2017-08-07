@@ -11,16 +11,6 @@ use Carbon\Carbon;
 
 class BookController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function save(Request $request)
     {
         $book_id = $request->book_id;
