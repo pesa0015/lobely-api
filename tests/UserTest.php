@@ -16,28 +16,6 @@ class UserTest extends TestCase
      *=========================================*/
 
     /**
-     * Helper function for creating users
-     *
-     */
-    public function newUser($token = false, $returnPassword = false, $admin = false)
-    {
-        $passwordRaw = null;
-        $JWTToken = null;
-        
-        if ($admin)
-            $user = factory(User::class)->states('admin')->create();
-        else
-            $user = factory(User::class)->create();
-
-        if ($token)
-            $JWTToken = \JWTAuth::fromUser($user);
-        if ($returnPassword)
-            $passwordRaw = 'secret';
-        // \JWTAuth::setToken($JWTToken);
-        return (object) ['user' => $user, 'token' => $JWTToken, 'password' => $passwordRaw];
-    }
-
-    /**
      * @group loginExistingUserWithFacebook
      * Tests login with Facebook
      */

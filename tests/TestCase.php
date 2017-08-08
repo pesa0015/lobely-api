@@ -2,6 +2,8 @@
 
 namespace Tests;
 
+use App\User;
+
 abstract class TestCase extends \Illuminate\Foundation\Testing\TestCase
 {
     /**
@@ -31,6 +33,28 @@ abstract class TestCase extends \Illuminate\Foundation\Testing\TestCase
     {
         parent::setUp();
         \Artisan::call('migrate');
+    }
+
+    /**
+     * Helper function for creating users
+     *
+     */
+    public function newUser($token = false, $returnPassword = false, $admin = false)
+    {
+        $passwordRaw = null;
+        $JWTToken = null;
+        
+        if ($admin)
+            $user = factory(User::class)->states('admin')->create();
+        else
+            $user = factory(User::class)->create();
+
+        if ($token)
+            $JWTToken = \JWTAuth::fromUser($user);
+        if ($returnPassword)
+            $passwordRaw = 'secret';
+        // \JWTAuth::setToken($JWTToken);
+        return (object) ['user' => $user, 'token' => $JWTToken, 'password' => $passwordRaw];
     }
 
     public function callHttpWithToken($method, $url, $token, $param = [])

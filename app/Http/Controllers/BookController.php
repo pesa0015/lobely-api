@@ -6,11 +6,30 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Book;
 use App\Bookshelf;
+use App\User;
 use Auth;
 use Carbon\Carbon;
 
 class BookController extends Controller
 {
+    public function index(Request $request)
+    {
+        dd(User::getUser($request));
+        if (isset($request->title)) {
+            $title = $request->title;
+            if (strlen($title) >= 2) {
+                $books = Book::select('books.id', 'title', 'title_slug', 'bookshelves.user_id')
+                             ->where('title', 'LIKE', "%{$title}%")
+                             ->leftJoin('bookshelves', 'books.id', '=', 'bookshelves.book_id')
+                             ->limit(50)
+                             ->get();
+
+                return response()->json($books);
+            }
+        }
+        // $myBooks = Bookshelf::with('book')->where('bookshelfes.user_id', )
+    }
+
     public function save(Request $request)
     {
         $book_id = $request->book_id;
