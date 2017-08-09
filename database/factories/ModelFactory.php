@@ -26,3 +26,15 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Book::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->name,
+        'original_title' => $faker->name,
+        'slug' => $faker->name,
+        'publisher' => $faker->name,
+        'published' => rand(1961, (int) date('y')),
+        'pages' => rand(129, 720),
+        'cover' => $faker->name
+    ];
+});
