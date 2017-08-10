@@ -14,20 +14,14 @@ class BookController extends Controller
 {
     public function index(Request $request)
     {
-        dd(User::getUser($request));
         if (isset($request->title)) {
             $title = $request->title;
             if (strlen($title) >= 2) {
-                $books = Book::select('books.id', 'title', 'title_slug', 'bookshelves.user_id')
-                             ->where('title', 'LIKE', "%{$title}%")
-                             ->leftJoin('bookshelves', 'books.id', '=', 'bookshelves.book_id')
-                             ->limit(50)
-                             ->get();
-
+                $books = Book::where('title', 'LIKE', "%{$title}%")->limit(5)->get();
                 return response()->json($books);
             }
         }
-        // $myBooks = Bookshelf::with('book')->where('bookshelfes.user_id', )
+        return response()->json([], 200);
     }
 
     public function save(Request $request)
