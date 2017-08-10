@@ -15,4 +15,9 @@ class Book extends Model
         'pages',
         'cover'
     ];
+
+    public function bookshelf()
+    {
+        return $this->hasMany('App\Bookshelf', 'book_id');
+    }
 }
