@@ -18,7 +18,7 @@ class CreateBookshelvesTable extends Migration
             $table->integer('user_id')->unsigned()->nullable();
             $table->integer('book_id')->unsigned()->nullable();
             $table->string('comment')->nullable();
-            $table->timestamp('timestamp')->nullable();
+            $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('book_id')->references('id')->on('books');

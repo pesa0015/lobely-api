@@ -6,10 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bookshelf extends Model
 {
-    public $timestamps = false;
-
     protected $fillable = [
-        'user_id', 'book_id', 'comment', 'timestamp'
+        'user_id', 'book_id', 'comment'
     ];
 
     public function user()
