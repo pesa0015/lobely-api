@@ -56,7 +56,7 @@ class BookController extends Controller
         return response()->json(['success' => true, 'book_id' => $book_id]);
     }
 
-    public function showBook($slug)
+    public function show($slug)
     {
         $book = Book::where('title_slug', $slug)->first();
         $saved = Bookshelf::where('user_id', Auth::user()->id)->where('book_id', $book->id)->first();
