@@ -39,4 +39,26 @@ class BooksTest extends TestCase
             'slug' => $book2->slug
         ]);
     }
+
+    /**
+     * @group showBook
+     *
+     */
+    public function testShowBook()
+    {
+        $token    = $this->newUser(true)->token;
+
+        $book    = factory(Book::class)->create([
+            'title' => 'Test book',
+            'slug'  => 'test-book'
+        ]);
+
+        $response = $this->callHttpWithToken('GET', 'books/' . $book->slug, $token);
+        $response->assertStatus(200);
+        $response->assertJsonFragment([
+            'id'    => $book->id,
+            'title' => $book->title,
+            'slug'  => $book->slug
+        ]);
+    }
 }

@@ -21,7 +21,8 @@ Route::post('/forgot-password', 'Auth\ForgotPasswordController@store');
 Route::post('/reset-password', 'Auth\ResetPasswordController@update');
 
 Route::group(['middleware' => ['jwt.auth', 'getUserFromToken']], function () {
-    Route::resource('books', 'BookController', ['only' => ['index']]);
+    Route::resource('books', 'BookController', ['only' => ['index', 'show']]);
+    Route::resource('bookshelfs', 'BookshelfController', ['only' => ['store']]);
     Route::get('search', 'SearchController@search');
 
     Route::group(['prefix' => 'user'], function () {

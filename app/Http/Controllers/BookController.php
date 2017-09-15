@@ -58,12 +58,8 @@ class BookController extends Controller
 
     public function show($slug)
     {
-        $book = Book::where('title_slug', $slug)->first();
-        $saved = Bookshelf::where('user_id', Auth::user()->id)->where('book_id', $book->id)->first();
-        $is_saved = false;
-        if ($saved && $saved->user_id == Auth::user()->id) {
-            $is_saved = true;
-        }
-        return view('book', ['book' => $book, 'saved' => $is_saved]);
+        $book = Book::where('slug', $slug)->firstOrFail();
+        
+        return response()->json($book);
     }
 }
