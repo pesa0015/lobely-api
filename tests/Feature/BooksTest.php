@@ -61,4 +61,29 @@ class BooksTest extends TestCase
             'slug'  => $book->slug
         ]);
     }
+
+    /**
+     * @group storeBookshelf
+     *
+     */
+    public function testStoreBookshelf()
+    {
+        $user  = $this->newUser(true);
+
+        $token = $user->token;
+
+        $book  = factory(Book::class)->create();
+
+        $payload = [
+            'bookId' => $book->id
+        ];
+
+        $response = $this->callHttpWithToken('POST', 'bookshelfs', $token, $payload);
+        $response->assertStatus(200);
+        
+        $this->assertDatabaseHas('bookshelves', [
+            'book_id' => $book->id,
+            'user_id' => $user->user->id
+        ]);
+    }
 }
