@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Book;
+use App\Bookshelf;
 
 class BooksTest extends TestCase
 {
@@ -82,6 +83,32 @@ class BooksTest extends TestCase
         $response->assertStatus(200);
         
         $this->assertDatabaseHas('bookshelves', [
+            'book_id' => $book->id,
+            'user_id' => $user->user->id
+        ]);
+    }
+
+    /**
+     * @group deleteFromBookshelf
+     *
+     */
+    public function testDeleteFromBookshelf()
+    {
+        $user  = $this->newUser(true);
+
+        $token = $user->token;
+
+        $book  = factory(Book::class)->create();
+        $bookshelf = factory(Bookshelf::class)->create();
+
+        $payload = [
+            'bookId' => $book->id
+        ];
+
+        $response = $this->callHttpWithToken('DELETE', 'bookshelfs/' . $book->id, $token, $payload);
+        $response->assertStatus(200);
+        
+        $this->assertDatabaseMissing('bookshelves', [
             'book_id' => $book->id,
             'user_id' => $user->user->id
         ]);
