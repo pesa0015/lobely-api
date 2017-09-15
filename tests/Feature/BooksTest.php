@@ -89,6 +89,30 @@ class BooksTest extends TestCase
     }
 
     /**
+     * @group storeBookshelf
+     *
+     */
+    public function testCantStoreBookshelfIfAlreadyLikedBook()
+    {
+        $user  = $this->newUser(true);
+
+        $token = $user->token;
+
+        $book  = factory(Book::class)->create();
+        $bookshelf = factory(Bookshelf::class)->create();
+
+        $payload = [
+            'bookId' => $book->id
+        ];
+
+        $response = $this->callHttpWithToken('POST', 'bookshelfs', $token, $payload);
+        $response->assertStatus(403);
+        $response->assertJson([
+            'already_liked_book' => true
+        ]);
+    }
+
+    /**
      * @group deleteFromBookshelf
      *
      */

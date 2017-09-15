@@ -30,7 +30,7 @@ class BookshelfController extends Controller
         ])->first();
         
         if ($haveLikedBook) {
-            return response()->json('already_liked_book', 403);
+            return response()->json(['already_liked_book' => true], 403);
         }
         
         $book = Bookshelf::create([
@@ -59,7 +59,7 @@ class BookshelfController extends Controller
         ])->first();
         
         if (!$bookshelf) {
-            return response()->json('have_not_liked_book', 403);
+            return response()->json(['have_not_liked_book' => true], 403);
         }
 
         $bookshelf->delete();
