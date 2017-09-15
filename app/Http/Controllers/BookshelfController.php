@@ -40,4 +40,30 @@ class BookshelfController extends Controller
 
         return response()->json([], 200);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $book = Book::findOrFail($id);
+
+        $user = UserFromToken::get();
+
+        $bookshelf = Bookshelf::where([
+            'user_id' => $user->id,
+            'book_id' => $id
+        ])->first();
+        
+        if (!$bookshelf) {
+            return response()->json('have_not_liked_book', 403);
+        }
+
+        $bookshelf->delete();
+
+        return response()->json([], 200);
+    }
 }
