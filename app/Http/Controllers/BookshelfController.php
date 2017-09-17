@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreBookshelfRequest;
-use App\Token\UserFromToken;
 use App\Book;
 use App\Bookshelf;
 
-class BookshelfController extends Controller
+class BookshelfController extends TokenController
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +16,7 @@ class BookshelfController extends Controller
      */
     public function index()
     {
-        $user = UserFromToken::get();
-
-        $books = Bookshelf::where('user_id', $user->id)->with('book')->get();
+        $books = Bookshelf::where('user_id', $this->user->id)->with('book')->get();
 
         return response()->json($books);
     }
@@ -36,10 +33,8 @@ class BookshelfController extends Controller
 
         $book = Book::findOrFail($bookId);
 
-        $user = UserFromToken::get();
-
         $haveLikedBook = Bookshelf::where([
-            'user_id' => $user->id,
+            'user_id' => $this->user->id,
             'book_id' => $bookId
         ])->first();
         
@@ -49,7 +44,7 @@ class BookshelfController extends Controller
         
         $book = Bookshelf::create([
             'book_id' => $bookId,
-            'user_id' => $user->id
+            'user_id' => $this->user->id
         ]);
 
         return response()->json([], 200);
@@ -65,10 +60,8 @@ class BookshelfController extends Controller
     {
         $book = Book::findOrFail($id);
 
-        $user = UserFromToken::get();
-
         $bookshelf = Bookshelf::where([
-            'user_id' => $user->id,
+            'user_id' => $this->user->id,
             'book_id' => $id
         ])->first();
         
