@@ -42,6 +42,34 @@ class BooksTest extends TestCase
     }
 
     /**
+     * @group indexBooks
+     *
+     */
+    public function testIndexBooks()
+    {
+        $token    = $this->newUser(true)->token;
+
+        $book  = factory(Book::class)->create();
+        $bookshelf = factory(Bookshelf::class)->create();
+
+        $response = $this->callHttpWithToken('GET', 'bookshelfs', $token);
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            '*' => [
+                'user_id',
+                'book_id',
+                'created_at',
+                'book' => [
+                    'title',
+                    'original_title',
+                    'slug',
+                    'cover'
+                ]
+            ]
+        ]);
+    }
+
+    /**
      * @group showBook
      *
      */

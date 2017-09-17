@@ -11,6 +11,20 @@ use App\Bookshelf;
 class BookshelfController extends Controller
 {
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $user = UserFromToken::get();
+
+        $books = Bookshelf::where('user_id', $user->id)->with('book')->get();
+
+        return response()->json($books);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
