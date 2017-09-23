@@ -10,7 +10,7 @@ before_script:
  - php artisan key:generate
 
 jobs:
-  includes:
+  include:
     - stage: test
       script: vendor/bin/phpcs --standard=PSR2 --colors app/
       script: vendor/bin/phpunit --coverage-text
