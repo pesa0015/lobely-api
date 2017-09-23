@@ -7,7 +7,7 @@ use App\Http\Requests\StoreBookshelfRequest;
 use App\Book;
 use App\Bookshelf;
 
-class BookshelfController extends TokenController
+class BookshelfController extends CustomController
 {
     /**
      * Display a listing of the resource.

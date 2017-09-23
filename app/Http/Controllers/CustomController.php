@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use JWTAuth;
 
-class TokenController extends Controller
+class CustomController extends Controller
 {
     protected $user;
 
