@@ -16,7 +16,9 @@ class BookshelfController extends CustomController
      */
     public function index()
     {
-        $books = Bookshelf::where('user_id', $this->user->id)->with('book')->get();
+        $booksRaw = Bookshelf::where('user_id', $this->user->id)->get();
+
+        $books = $this->transform->collection($booksRaw, Bookshelf::getTransformer(), Bookshelf::getIncludes());
 
         return response()->json($books);
     }

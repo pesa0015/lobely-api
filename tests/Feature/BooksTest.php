@@ -58,7 +58,7 @@ class BooksTest extends TestCase
                 'created_at',
                 'book' => [
                     'title',
-                    'original_title',
+                    'originalTitle',
                     'slug',
                     'cover'
                 ]
