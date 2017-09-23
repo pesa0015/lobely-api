@@ -10,5 +10,5 @@ before_script:
  - php artisan key:generate
 
 script:
- - psr.sh
+ - sh psr.sh
  - vendor/bin/phpunit --coverage-text
