@@ -11,7 +11,8 @@
         "doctrine/dbal": "^2.5",
         "tymon/jwt-auth": "0.5.*",
         "barryvdh/laravel-cors": "^0.9.2",
-        "jdavidbakr/mail-tracker": "~2.1"
+        "jdavidbakr/mail-tracker": "~2.1",
+        "league/fractal": "^0.17.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
