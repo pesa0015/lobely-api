@@ -13,4 +13,5 @@ jobs:
   include:
     - stage: test
       script: vendor/bin/phpcs --standard=PSR2 --colors app/
+    - # stage name not required, will continue to use `test`
       script: vendor/bin/phpunit --coverage-text
