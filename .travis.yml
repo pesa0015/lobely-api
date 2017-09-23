@@ -12,6 +12,6 @@ before_script:
 jobs:
   include:
     - stage: test
-      script: vendor/bin/phpcs --standard=PSR2 --colors app/
+      script: vendor/bin/phpcs --standard=PSR2 --colors app/ codeSniffer
     - # stage name not required, will continue to use `test`
-      script: vendor/bin/phpunit --coverage-text
+      script: vendor/bin/phpunit --coverage-text unitTesting
