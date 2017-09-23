@@ -23,7 +23,7 @@ class UserTest extends TestCase
     {
         $user = $this->newUser(false, true);
 
-        $response = $this->call('POST', '/auth/facebook', [
+        $response = $this->callHttp('POST', '/auth/facebook', [
             'facebook_id' => $user->user->facebook_id,
             'name' => $user->user->name,
             'email' => $user->user->email,
@@ -44,7 +44,7 @@ class UserTest extends TestCase
     {
         $user = $this->newUser(false, true);
 
-        $response = $this->call('POST', '/auth/facebook', [
+        $response = $this->callHttp('POST', '/auth/facebook', [
             'facebook_id' => 2,
             'name' => 'Test',
             'email' => 'test@gmail.com',
@@ -65,7 +65,7 @@ class UserTest extends TestCase
     {
         $user = $this->newUser(false, true);
 
-        $response = $this->call('POST', '/auth', [
+        $response = $this->callHttp('POST', '/auth', [
             'email' => $user->user->email,
             'password' => $user->password
         ]);
@@ -110,7 +110,7 @@ class UserTest extends TestCase
             $this->assertEquals('emails.forgot-password', $view);
         });
 
-        $response = $this->call('POST', '/forgot-password', [
+        $response = $this->callHttp('POST', '/forgot-password', [
             'email' => $user->email
         ]);
 
@@ -137,7 +137,7 @@ class UserTest extends TestCase
 
         $token = \App\PasswordReset::where('user_id', $user->id)->first()->token;
 
-        $response = $this->call('POST', '/reset-password', [
+        $response = $this->callHttp('POST', '/reset-password', [
             'token'    => $token,
             'password' => 'Test123'
         ]);
@@ -201,7 +201,7 @@ class UserTest extends TestCase
             'password' => 'Test123'
         ];
 
-        $response = $this->call('POST', '/register', $newUserWithSameEmail);
+        $response = $this->callHttp('POST', '/register', $newUserWithSameEmail);
 
         $response->assertStatus(422);
 
@@ -214,7 +214,7 @@ class UserTest extends TestCase
         $newUserWithDifferentEmail = $newUserWithSameEmail;
         $newUserWithDifferentEmail['email'] = 'new@example.com';
 
-        $response = $this->call('POST', '/register', $newUserWithDifferentEmail);
+        $response = $this->callHttp('POST', '/register', $newUserWithDifferentEmail);
 
         $response->assertStatus(200);
         $userId = $response->getData()->id;
