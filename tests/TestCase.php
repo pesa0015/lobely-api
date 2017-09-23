@@ -57,10 +57,21 @@ abstract class TestCase extends \Illuminate\Foundation\Testing\TestCase
         return (object) ['user' => $user, 'token' => $JWTToken, 'password' => $passwordRaw];
     }
 
+    protected function callHttp($method, $url, $param = [])
+    {
+        $server = [
+            'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'
+        ];
+        $response = $this->call($method, $url, $param, [], [], $server);
+        
+        return $response;
+    }
+
     public function callHttpWithToken($method, $url, $token, $param = [])
     {
         $server = [
-            'HTTP_Authorization' => 'Bearer ' . $token
+            'HTTP_Authorization'    => 'Bearer ' . $token,
+            'HTTP_X_REQUESTED_WITH' => 'XMLHttpRequest'
         ];
         $response = $this->call($method, $url, $param, [], [], $server);
         
