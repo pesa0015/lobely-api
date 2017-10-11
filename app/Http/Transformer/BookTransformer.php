@@ -7,6 +7,10 @@ use App\Book;
 
 class BookTransformer extends Fractal\TransformerAbstract
 {
+    protected $availableIncludes = [
+        'authors'
+    ];
+
     public function transform(Book $book)
     {
         return [
@@ -15,5 +19,17 @@ class BookTransformer extends Fractal\TransformerAbstract
             'slug'          => $book->slug,
             'cover'         => $book->cover
         ];
+    }
+
+    /**
+     * Include authors
+     *
+     * @return League\Fractal\CollectionResource
+     */
+    public function includeAuthors(Book $book)
+    {
+        $authors = $book->authors;
+
+        return $this->collection($authors, new AuthorTransformer);
     }
 }

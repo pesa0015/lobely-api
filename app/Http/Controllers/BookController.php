@@ -10,7 +10,7 @@ use App\User;
 use Auth;
 use Carbon\Carbon;
 
-class BookController extends Controller
+class BookController extends CustomController
 {
     public function index(Request $request)
     {
@@ -26,7 +26,9 @@ class BookController extends Controller
 
     public function show($slug)
     {
-        $book = Book::where('slug', $slug)->firstOrFail();
+        $bookRaw = Book::where('slug', $slug)->firstOrFail();
+
+        $book = $this->transform->item($bookRaw, Book::getTransformer(), Book::getIncludes());
         
         return response()->json($book);
     }
