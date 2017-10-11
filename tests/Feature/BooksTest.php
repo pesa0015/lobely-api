@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Book;
 use App\Bookshelf;
+use App\Author;
 
 class BooksTest extends TestCase
 {
@@ -79,12 +80,27 @@ class BooksTest extends TestCase
             'slug'  => 'test-book'
         ]);
 
+        $author1 = factory(Author::class)->create();
+        $author2 = factory(Author::class)->create();
+
+        $book->authors()->save($author1);
+        $book->authors()->save($author2);
+
         $response = $this->callHttpWithToken('GET', 'books/' . $book->slug, $token);
         $response->assertStatus(200);
         $response->assertJsonFragment([
-            'id'    => $book->id,
             'title' => $book->title,
-            'slug'  => $book->slug
+            'slug'  => $book->slug,
+            'authors' => [
+                'data' => [
+                    0 => [
+                        'name' => $author1->name
+                    ],
+                    1 => [
+                        'name' => $author2->name
+                    ]
+                ]
+            ]
         ]);
     }
 
