@@ -54,15 +54,10 @@ class BooksTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             '*' => [
-                'user_id',
-                'book_id',
-                'created_at',
-                'book' => [
-                    'title',
-                    'originalTitle',
-                    'slug',
-                    'cover'
-                ]
+                'title',
+                'originalTitle',
+                'slug',
+                'cover'
             ]
         ]);
     }
