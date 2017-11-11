@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return $request->attributes->user;
     }
+
+    public function books()
+    {
+        return $this->belongsToMany('App\Book', 'bookshelves', 'user_id', 'book_id');
+    }
 }
