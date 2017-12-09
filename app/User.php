@@ -27,6 +27,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public static function getTransformer()
+    {
+        return new \App\Http\Transformer\UserTransformer;
+    }
+
     public static function getUser($request)
     {
         return $request->attributes->user;

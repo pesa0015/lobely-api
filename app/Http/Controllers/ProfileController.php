@@ -16,15 +16,17 @@ class ProfileController extends CustomController
      */
     public function update(UpdateProfileRequest $request, $id)
     {
-        $user = User::findOrFail($this->user->id);
+        $userRaw = User::findOrFail($this->user->id);
 
-        $email = User::where('email', $request->email)->where('id', '!=', $user->id)->get();
+        $email = User::where('email', $request->email)->where('id', '!=', $userRaw->id)->get();
 
         if (!$email->isEmpty()) {
             return response()->json(['email' => ['The email has already been taken.']], 422);
         }
 
-        $user->update($request->all());
+        $userRaw->update($request->all());
+
+        $user = $this->transform->item($userRaw, User::getTransformer());
 
         return response()->json($user);
     }
@@ -37,7 +39,9 @@ class ProfileController extends CustomController
      */
     public function show($id)
     {
-        $user = User::findOrFail($this->user->id);
+        $userRaw = User::findOrFail($this->user->id);
+
+        $user = $this->transform->item($userRaw, User::getTransformer());
 
         return response()->json($user);
     }

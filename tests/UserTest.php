@@ -154,9 +154,17 @@ class UserTest extends TestCase
         $response->assertStatus(200);
 
         $response->assertJson([
-            'name'  => $user->user->name,
-            'email' => $user->user->email,
-            'bio'   => $user->user->bio
+            'id'                 => $user->user->id,
+            'name'               => $user->user->name,
+            'email'              => $user->user->email,
+            'img'                => $user->user->profile_img,
+            'interestedInGender' => $user->user->interested_in_gender,
+            'birthDate'          => $user->user->birth_date,
+            'bio'                => $user->user->bio
+        ]);
+
+        $response->assertJsonMissing([
+            'facebookId'  => $user->user->facebook_id
         ]);
     }
 
