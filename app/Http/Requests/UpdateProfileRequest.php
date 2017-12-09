@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 
-class UpdateUserRequest extends Request
+class UpdateProfileRequest extends Request
 {
     protected $rules = [
         'name'  => 'required|string',
-        'email' => 'email|unique:users',
+        'email' => 'required|email',
         'gender' => 'required|string',
         'interested_in_gender' => 'required|string',
-        'birth_date' => 'required'
+        'birth_date' => 'required|string'
     ];
 
     /**

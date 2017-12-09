@@ -164,7 +164,7 @@ class UserTest extends TestCase
             'bio'   => $user->user->bio
         ]);
 
-        $response = $this->callHttpWithToken('PATCH', '/user/profile/update/' . $user->user->id, $user->token, $payload);
+        $response = $this->callHttpWithToken('PATCH', '/user/profile/' . $user->user->id, $user->token, $payload);
 
         $response->assertStatus(200);
 
@@ -194,7 +194,9 @@ class UserTest extends TestCase
             'name'     => 'Peter Sall',
             'email'    => 'peters945@hotmail.com',
             'gender'   => 'male',
-            'password' => 'Test123'
+            'password' => 'Test123',
+            'birth_date' => '10/1/1978',
+            'interested_in_gender' => 'f'
         ];
 
         $response = $this->callHttp('POST', '/register', $newUserWithSameEmail);
@@ -218,7 +220,7 @@ class UserTest extends TestCase
         $updateUser = $newUserWithSameEmail;
         $token = \JWTAuth::fromUser(User::findOrFail($userId));
 
-        $response = $this->callHttpWithToken('PATCH', '/user/profile/update/' . $userId, $token, $updateUser);
+        $response = $this->callHttpWithToken('PATCH', '/user/profile/' . $userId, $token, $updateUser);
 
         $response->assertStatus(422);
 
