@@ -28,4 +28,17 @@ class ProfileController extends CustomController
 
         return response()->json($user);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $user = User::findOrFail($this->user->id);
+
+        return response()->json($user);
+    }
 }

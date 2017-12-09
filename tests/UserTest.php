@@ -142,6 +142,25 @@ class UserTest extends TestCase
     }
 
     /**
+     * @group showProfile
+     * Tests show profile
+     */
+    public function testShowProfile()
+    {
+        $user = $this->newUser(true);
+
+        $response = $this->callHttpWithToken('GET', '/user/profile/' . $user->user->id, $user->token);
+
+        $response->assertStatus(200);
+
+        $response->assertJson([
+            'name'  => $user->user->name,
+            'email' => $user->user->email,
+            'bio'   => $user->user->bio
+        ]);
+    }
+
+    /**
      * @group updateProfile
      * Tests update profile
      */

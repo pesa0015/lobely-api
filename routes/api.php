@@ -26,7 +26,7 @@ Route::group(['middleware' => ['jwt.auth', 'getUserFromToken']], function () {
     Route::get('search', 'SearchController@search');
 
     Route::group(['prefix' => 'user'], function () {
-        Route::resource('profile', 'ProfileController', ['only' => ['update']]);
+        Route::resource('profile', 'ProfileController', ['only' => ['show', 'update']]);
     });
 });
 
