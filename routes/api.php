@@ -29,3 +29,7 @@ Route::group(['middleware' => ['jwt.auth', 'getUserFromToken']], function () {
         Route::patch('/profile/update/{id}', 'UserController@updateProfile');
     });
 });
+
+Route::group(['middleware' => ['jwt.refresh']], function () {
+    Route::get('refresh-token', 'Auth\RefreshTokenController@index');
+});
