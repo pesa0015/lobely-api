@@ -14,6 +14,7 @@ class UserTransformer extends Fractal\TransformerAbstract
             'name'               => $user->name,
             'email'              => $user->email,
             'img'                => $user->profile_img,
+            'gender'             => $user->gender,
             'interestedInGender' => $user->interested_in_gender,
             'birthDate'          => $user->birth_date,
             'bio'                => $user->bio
