@@ -33,7 +33,7 @@ class Book extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User', 'bookshelves', 'user_id', 'book_id');
+        return $this->belongsToMany('App\User', 'bookshelves', 'book_id', 'user_id');
     }
 
     public function authors()
