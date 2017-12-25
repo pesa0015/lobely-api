@@ -31,6 +31,11 @@ class Book extends Model
         return $this->hasMany('App\Bookshelf', 'book_id');
     }
 
+    public function users()
+    {
+        return $this->belongsToMany('App\User', 'bookshelves', 'user_id', 'book_id');
+    }
+
     public function authors()
     {
         return $this->belongsToMany('App\Author', 'book_authors', 'book_id', 'author_id');
