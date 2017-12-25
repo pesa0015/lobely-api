@@ -28,8 +28,16 @@ class BookController extends CustomController
     {
         $bookRaw = Book::where('slug', $slug)->firstOrFail();
 
+        $onMyBookshelf = $bookRaw->users()->where('user_id', $this->user->id)->exists();
+
         $book = $this->transform->item($bookRaw, Book::getTransformer(), Book::getIncludes());
         
+        if ($onMyBookshelf) {
+            $book->liked = true;
+        } else {
+            $book->liked = false;
+        }
+
         return response()->json($book);
     }
 }

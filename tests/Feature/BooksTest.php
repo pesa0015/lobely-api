@@ -68,12 +68,14 @@ class BooksTest extends TestCase
      */
     public function testShowBook()
     {
-        $token    = $this->newUser(true)->token;
+        $user    = $this->newUser(true);
 
         $book    = factory(Book::class)->create([
             'title' => 'Test book',
             'slug'  => 'test-book'
         ]);
+
+        $user->user->books()->attach($book);
 
         $author1 = factory(Author::class)->create();
         $author2 = factory(Author::class)->create();
@@ -81,7 +83,7 @@ class BooksTest extends TestCase
         $book->authors()->save($author1);
         $book->authors()->save($author2);
 
-        $response = $this->callHttpWithToken('GET', 'books/' . $book->slug, $token);
+        $response = $this->callHttpWithToken('GET', 'books/' . $book->slug, $user->token);
         $response->assertStatus(200);
         $response->assertJsonFragment([
             'title' => $book->title,
@@ -95,7 +97,8 @@ class BooksTest extends TestCase
                         'name' => $author2->name
                     ]
                 ]
-            ]
+            ],
+            'liked' => true
         ]);
     }
 
