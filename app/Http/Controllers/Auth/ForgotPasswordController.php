@@ -32,7 +32,7 @@ class ForgotPasswordController extends Controller
             'token'   => $token
         ]);
 
-        $url = env('APP_URL') . '/reset-password';
+        $url = env('FE_APP_URL') . '/reset-password';
 
         $mail = new CustomMail();
         $mail->send('emails.forgot-password', $user->email, ['url' => $url, 'token' => $token]);
