@@ -24,11 +24,18 @@ class BookController extends CustomController
         return response()->json([], 200);
     }
 
-    public function show($slug)
+    public function show(Request $request, $slug)
     {
         $bookRaw = Book::where('slug', $slug)->firstOrFail();
 
         $onMyBookshelf = $bookRaw->users()->where('user_id', $this->user->id)->exists();
+
+        if ($request->has('showUsers') && $onMyBookshelf) {
+            $usersRaw = $bookRaw->users()->where('user_id', '!=', $this->user->id)->get();
+            $users = $this->transform->collection($usersRaw, User::getTransformer());
+
+            return response()->json($users);
+        }
 
         $book = $this->transform->item($bookRaw, Book::getTransformer(), Book::getIncludes());
         
