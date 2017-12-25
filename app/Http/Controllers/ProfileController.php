@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\UpdatePasswordRequest;
 use App\User;
 
 class ProfileController extends CustomController
@@ -29,6 +30,36 @@ class ProfileController extends CustomController
         $user = $this->transform->item($userRaw, User::getTransformer());
 
         return response()->json($user);
+    }
+
+    /**
+     * Update user password
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePassword(UpdatePasswordRequest $request)
+    {
+        $currentPassword   = $request->current;
+
+        $credentials = ['email' => $this->user->email, 'password' => $currentPassword];
+
+        if (!\JWTAuth::attempt($credentials)) {
+            return response()->json('user_not_allowed', 403);
+        }
+
+        $new       = $request->new;
+        $repeatNew = $request->repeatNew;
+
+        if ($new != $repeatNew) {
+            return response()->json('password_incorrect', 403);
+        }
+
+        $user = User::findOrFail($this->user->id);
+        $user->password = bcrypt($new);
+        $user->update();
+
+        return response()->json([], 200);
     }
 
     /**

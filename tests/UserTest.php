@@ -257,4 +257,58 @@ class UserTest extends TestCase
             ]
         ]);
     }
+
+    /**
+     * @group changePassword
+     * Tests changing password
+     */
+    public function testChangePassword()
+    {
+        $user = $this->newUser(true, true);
+
+        $payload = [
+            'current'   => $user->password,
+            'new'       => 'test123',
+            'repeatNew' => 'test123'
+        ];
+
+        $this->assertDatabaseHas('users', [
+            'password' => $user->user->password
+        ]);
+
+        $response = $this->callHttpWithToken('PUT', '/user/profile/password', $user->token, $payload);
+
+        $response->assertStatus(200);
+
+        $this->assertDatabaseMissing('users', [
+            'password' => $user->user->password
+        ]);
+    }
+
+    /**
+     * @group changePasswordFails
+     * Tests changing password
+     */
+    public function testChangePasswordFailsWithWrongPassword()
+    {
+        $user = $this->newUser(true, true);
+
+        $payload = [
+            'current'   => 'current',
+            'new'       => 'test123',
+            'repeatNew' => 'test123'
+        ];
+
+        $this->assertDatabaseHas('users', [
+            'password' => $user->user->password
+        ]);
+
+        $response = $this->callHttpWithToken('PUT', '/user/profile/password', $user->token, $payload);
+
+        $response->assertStatus(403);
+
+        $this->assertDatabaseHas('users', [
+            'password' => $user->user->password
+        ]);
+    }
 }
