@@ -15,7 +15,7 @@ class ProfileController extends CustomController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProfileRequest $request, $id)
+    public function update(UpdateProfileRequest $request)
     {
         $userRaw = User::findOrFail($this->user->id);
 
@@ -68,7 +68,7 @@ class ProfileController extends CustomController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         $userRaw = User::findOrFail($this->user->id);
 

@@ -149,7 +149,7 @@ class UserTest extends TestCase
     {
         $user = $this->newUser(true);
 
-        $response = $this->callHttpWithToken('GET', '/user/profile/' . $user->user->id, $user->token);
+        $response = $this->callHttpWithToken('GET', '/user/profile', $user->token);
 
         $response->assertStatus(200);
 
@@ -191,7 +191,7 @@ class UserTest extends TestCase
             'bio'   => $user->user->bio
         ]);
 
-        $response = $this->callHttpWithToken('PATCH', '/user/profile/' . $user->user->id, $user->token, $payload);
+        $response = $this->callHttpWithToken('PUT', '/user/profile', $user->token, $payload);
 
         $response->assertStatus(200);
 
@@ -247,7 +247,7 @@ class UserTest extends TestCase
         $updateUser = $newUserWithSameEmail;
         $token = \JWTAuth::fromUser(User::findOrFail($userId));
 
-        $response = $this->callHttpWithToken('PATCH', '/user/profile/' . $userId, $token, $updateUser);
+        $response = $this->callHttpWithToken('PUT', '/user/profile', $token, $updateUser);
 
         $response->assertStatus(422);
 

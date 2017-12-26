@@ -27,7 +27,8 @@ Route::group(['middleware' => ['jwt.auth', 'getUserFromToken']], function () {
 
     Route::group(['prefix' => 'user'], function () {
         Route::put('profile/password', 'ProfileController@updatePassword');
-        Route::resource('profile', 'ProfileController', ['only' => ['show', 'update']]);
+        Route::put('profile', 'ProfileController@update');
+        Route::get('profile', 'ProfileController@show');
     });
 });
 
