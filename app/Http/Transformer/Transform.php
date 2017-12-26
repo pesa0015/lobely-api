@@ -8,20 +8,26 @@ use League\Fractal\Serializer\ArraySerializer;
 
 class Transform
 {
+    private $fractal;
+
+    public function __construct()
+    {
+        $this->fractal = new Manager();
+        $this->fractal->setSerializer(new ArraySerializer());
+    }
+
     /**
      * Transform collection
      *
      */
     public function collection($rawCollection, $transformerController, $includes = false)
     {
-        $fractal = new Manager();
-        $fractal->setSerializer(new ArraySerializer());
         if ($includes) {
-            $fractal->parseIncludes($includes);
+            $this->fractal->parseIncludes($includes);
         }
         $transformData = new Resource\Collection($rawCollection, $transformerController);
 
-        $data = current($fractal->createData($transformData)->toArray());
+        $data = current($this->fractal->createData($transformData)->toArray());
 
         return $data;
     }
@@ -32,14 +38,12 @@ class Transform
      */
     public function item($rawCollection, $transformerController, $includes = false)
     {
-        $fractal = new Manager();
-        $fractal->setSerializer(new ArraySerializer());
         if ($includes) {
-            $fractal->parseIncludes($includes);
+            $this->fractal->parseIncludes($includes);
         }
         $transformData = new Resource\Item($rawCollection, $transformerController);
 
-        $data = json_decode($fractal->createData($transformData)->toJson());
+        $data = json_decode($this->fractal->createData($transformData)->toJson());
 
         return $data;
     }
