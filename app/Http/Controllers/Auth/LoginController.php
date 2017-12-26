@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-// use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\User;
 use Illuminate\Http\Request;
 use JWTAuth;
@@ -21,17 +20,6 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest', ['except' => 'logout']);
-        $this->middleware('jwt.auth', ['except' => ['loginWithFacebook', 'authenticate']]);
-    }
 
     public function loginWithFacebook(Request $request)
     {
