@@ -11,11 +11,13 @@
 |
 */
 
-Route::post('/auth/facebook', 'Auth\LoginController@loginWithFacebook');
-Route::post('/auth', 'Auth\LoginController@authenticate');
-Route::post('/register', 'Auth\RegisterController@store');
-Route::post('/forgot-password', 'Auth\ForgotPasswordController@store');
-Route::post('/reset-password', 'Auth\ResetPasswordController@update');
+Route::group(['namespace' => 'Auth'], function () {
+    Route::post('/auth/facebook', 'LoginController@loginWithFacebook');
+    Route::post('/auth', 'LoginController@authenticate');
+    Route::post('/register', 'RegisterController@store');
+    Route::post('/forgot-password', 'ForgotPasswordController@store');
+    Route::post('/reset-password', 'ResetPasswordController@update');
+});
 
 Route::group(['middleware' => ['jwt.auth']], function () {
     Route::resource('books', 'BookController', ['only' => ['index', 'show']]);
