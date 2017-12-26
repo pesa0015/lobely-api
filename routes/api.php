@@ -17,7 +17,7 @@ Route::post('/register', 'Auth\RegisterController@store');
 Route::post('/forgot-password', 'Auth\ForgotPasswordController@store');
 Route::post('/reset-password', 'Auth\ResetPasswordController@update');
 
-Route::group(['middleware' => ['jwt.auth', 'getUserFromToken']], function () {
+Route::group(['middleware' => ['jwt.auth']], function () {
     Route::resource('books', 'BookController', ['only' => ['index', 'show']]);
     Route::resource('bookshelfs', 'BookshelfController', ['only' => ['index', 'store', 'destroy']]);
     Route::get('search', 'SearchController@search');
