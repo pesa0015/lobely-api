@@ -21,6 +21,11 @@ class Book extends Model
         return new \App\Http\Transformer\BookTransformer;
     }
 
+    public static function getBookshelfTransformer()
+    {
+        return new \App\Http\Transformer\BookshelfTransformer;
+    }
+
     public static function getIncludes()
     {
         return ['authors'];

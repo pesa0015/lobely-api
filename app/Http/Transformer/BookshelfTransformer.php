@@ -3,34 +3,31 @@
 namespace App\Http\Transformer;
 
 use League\Fractal;
-use App\Bookshelf;
 use App\Book;
-use App\User;
 
 class BookshelfTransformer extends Fractal\TransformerAbstract
 {
     protected $availableIncludes = [
-        'book'
+        'authors'
     ];
 
-    public function transform(Bookshelf $bookshelf)
+    public function transform(Book $book)
     {
-        return [
-            'user_id'    => $bookshelf->user_id,
-            'book_id'    => $bookshelf->book_id,
-            'created_at' => $bookshelf->created_at
-        ];
+        return array_merge(
+            (new BookTransformer)->transform($book),
+            (new BookLikedTransformer)->transform($book)
+        );
     }
 
     /**
-     * Include Book
+     * Include authors
      *
-     * @return League\Fractal\ItemResource
+     * @return League\Fractal\CollectionResource
      */
-    public function includeBook(Bookshelf $bookshelf)
+    public function includeAuthors(Book $book)
     {
-        $book = $bookshelf->book;
+        $authors = $book->authors;
 
-        return $this->item($book, new BookTransformer);
+        return $this->collection($authors, new AuthorTransformer);
     }
 }

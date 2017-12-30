@@ -58,7 +58,8 @@ class BooksTest extends TestCase
                 'title',
                 'originalTitle',
                 'slug',
-                'cover'
+                'cover',
+                'liked'
             ]
         ]);
     }

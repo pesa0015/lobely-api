@@ -18,7 +18,7 @@ class BookshelfController extends CustomController
     {
         $booksRaw = $this->user->books()->get();
         
-        $books = $this->transform->collection($booksRaw, Book::getTransformer(), Book::getIncludes());
+        $books = $this->transform->collection($booksRaw, Book::getBookshelfTransformer(), Book::getIncludes());
 
         return response()->json($books);
     }
