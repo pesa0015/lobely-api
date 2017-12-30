@@ -54,6 +54,7 @@ class BooksTest extends TestCase
         $response->assertStatus(200);
         $response->assertJsonStructure([
             '*' => [
+                'id',
                 'title',
                 'originalTitle',
                 'slug',
@@ -86,6 +87,7 @@ class BooksTest extends TestCase
         $response = $this->callHttpWithToken('GET', 'books/' . $book->slug, $user->token);
         $response->assertStatus(200);
         $response->assertJsonFragment([
+            'id'    => $book->id,
             'title' => $book->title,
             'slug'  => $book->slug,
             'authors' => [

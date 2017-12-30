@@ -14,6 +14,7 @@ class BookTransformer extends Fractal\TransformerAbstract
     public function transform(Book $book)
     {
         return [
+            'id'            => $book->id,
             'title'         => $book->title,
             'originalTitle' => $book->original_title,
             'slug'          => $book->slug,
