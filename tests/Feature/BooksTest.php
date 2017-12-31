@@ -59,7 +59,8 @@ class BooksTest extends TestCase
                 'originalTitle',
                 'slug',
                 'cover',
-                'liked'
+                'liked',
+                'comment'
             ]
         ]);
     }
@@ -77,7 +78,7 @@ class BooksTest extends TestCase
             'slug'  => 'test-book'
         ]);
 
-        $user->user->books()->attach($book);
+        $user->user->books()->attach($book, ['comment' => 'test']);
 
         $author1 = factory(Author::class)->create();
         $author2 = factory(Author::class)->create();
@@ -101,7 +102,8 @@ class BooksTest extends TestCase
                     ]
                 ]
             ],
-            'liked' => true
+            'liked' => true,
+            'comment' => 'test'
         ]);
     }
 

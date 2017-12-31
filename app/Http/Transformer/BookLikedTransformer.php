@@ -10,7 +10,8 @@ class BookLikedTransformer extends Fractal\TransformerAbstract
     public function transform(Book $book)
     {
         return [
-            'liked' => true
+            'liked'   => true,
+            'comment' => $book->bookshelf()->first()->comment
         ];
     }
 }
