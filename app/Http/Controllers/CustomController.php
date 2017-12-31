@@ -19,6 +19,6 @@ class CustomController extends Controller
         $user  = JWTAuth::toUser($token);
         $this->user = $user;
 
-        $this->transform = new Transform();
+        $this->transform = new Transform($this->user);
     }
 }

@@ -18,12 +18,12 @@ class Book extends Model
 
     public static function getTransformer()
     {
-        return new \App\Http\Transformer\BookTransformer;
+        return \App\Http\Transformer\BookTransformer::class;
     }
 
     public static function getBookshelfTransformer()
     {
-        return new \App\Http\Transformer\BookshelfTransformer;
+        return \App\Http\Transformer\BookshelfTransformer::class;
     }
 
     public static function getIncludes()
