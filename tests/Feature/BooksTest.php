@@ -157,6 +157,46 @@ class BooksTest extends TestCase
     }
 
     /**
+     * @group updateBookComment
+     *
+     */
+    public function testupdateBookComment()
+    {
+        $user  = $this->newUser(true);
+
+        $token = $user->token;
+
+        $book  = factory(Book::class)->create();
+
+        $user->user->books()->attach($book, ['comment' => 'test']);
+
+        $this->assertDatabaseHas('bookshelves', [
+            'book_id' => $book->id,
+            'user_id' => $user->user->id,
+            'comment' => 'test'
+        ]);
+
+        $payload = [
+            'comment' => 'comment'
+        ];
+
+        $response = $this->callHttpWithToken('PUT', 'bookshelfs/' . $book->id, $token, $payload);
+        $response->assertStatus(200);
+
+        $this->assertDatabaseMissing('bookshelves', [
+            'book_id' => $book->id,
+            'user_id' => $user->user->id,
+            'comment' => 'test'
+        ]);
+
+        $this->assertDatabaseHas('bookshelves', [
+            'book_id' => $book->id,
+            'user_id' => $user->user->id,
+            'comment' => 'comment'
+        ]);
+    }
+
+    /**
      * @group deleteFromBookshelf
      *
      */

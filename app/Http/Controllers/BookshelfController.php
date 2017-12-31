@@ -53,6 +53,27 @@ class BookshelfController extends CustomController
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $book = Bookshelf::where('book_id', $id)->where('user_id', $this->user->id)->first();
+
+        if (!$book) {
+            return response()->json(['have_not_liked_book'], 403);
+        }
+
+        $book->comment = $request->comment;
+        $book->update();
+
+        return response()->json([], 200);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
