@@ -37,13 +37,7 @@ class BookController extends CustomController
             return response()->json($users);
         }
 
-        $book = $this->transform->item($bookRaw, Book::getTransformer(), Book::getIncludes());
-        
-        if ($onMyBookshelf) {
-            $book->liked = true;
-        } else {
-            $book->liked = false;
-        }
+        $book = $this->transform->item($bookRaw, Book::getBookshelfTransformer(), Book::getIncludes());
 
         return response()->json($book);
     }
