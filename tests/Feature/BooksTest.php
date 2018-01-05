@@ -130,6 +130,13 @@ class BooksTest extends TestCase
             'book_id' => $book->id,
             'user_id' => $user->user->id
         ]);
+
+        $this->assertDatabaseMissing('bookshelves', [
+            'book_id' => $book->id,
+            'user_id' => $user->user->id,
+            'created_at' => null,
+            'updated_at' => null
+        ]);
     }
 
     /**

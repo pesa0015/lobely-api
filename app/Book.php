@@ -38,11 +38,11 @@ class Book extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User', 'bookshelves', 'book_id', 'user_id');
+        return $this->belongsToMany('App\User', 'bookshelves', 'book_id', 'user_id')->withTimestamps();
     }
 
     public function authors()
     {
-        return $this->belongsToMany('App\Author', 'book_authors', 'book_id', 'author_id');
+        return $this->belongsToMany('App\Author', 'book_authors', 'book_id', 'author_id')->withTimestamps();
     }
 }
