@@ -1,0 +1,172 @@
+{
+    "users": [
+        {
+            "facebook_id": 0,
+            "name": "Herminia Mccoy",
+            "gender": "f",
+            "interested_in_gender": "m",
+            "email": "herminia.mccoy88@example.com",
+            "profile_img": "https://randomuser.me/api/portraits/women/19.jpg",
+            "birth_date": "10/1/1978",
+            "password": "derek",
+            "books": [
+                {
+                    "title": "Innan gryningen"
+                },
+                {
+                    "title": "Konsten att höra hjärtslag"
+                }
+            ]
+        },
+        {
+            "facebook_id": 0,
+            "name": "Oscar Graves",
+            "gender": "m",
+            "interested_in_gender": "f",
+            "email": "oscar.graves76@example.com",
+            "profile_img": "https://randomuser.me/api/portraits/men/17.jpg",
+            "birth_date": "10/6/1983",
+            "password": "smiles",
+            "books": [
+                {
+                    "title": "Dollar"
+                }
+            ]
+        },
+        {
+            "facebook_id": 0,
+            "name": "Yvonne Wade",
+            "gender": "f",
+            "interested_in_gender": "m",
+            "email": "yvonne.wade21@example.com",
+            "profile_img": "https://randomuser.me/api/portraits/women/19.jpg",
+            "birth_date": "3/3/1981",
+            "password": "craig",
+            "books": [
+                {
+                    "title": "Konsten att höra hjärtslag"
+                }
+            ]
+        },
+        {
+            "facebook_id": 0,
+            "name": "Elsie West",
+            "gender": "f",
+            "interested_in_gender": "m",
+            "email": "elsie.west86@example.com",
+            "profile_img": "https://randomuser.me/api/portraits/women/40.jpg",
+            "birth_date": "10/1/1978",
+            "password": "sunflowe",
+            "books": [
+                {
+                    "title": "Brinnande livet"
+                }
+            ]
+        },
+        {
+            "facebook_id": 0,
+            "name": "Marshall Gonzales",
+            "gender": "m",
+            "interested_in_gender": "f",
+            "email": "marshall.gonzales40@example.com",
+            "profile_img": "https://randomuser.me/api/portraits/men/26.jpg",
+            "birth_date": "10/5/1982",
+            "password": "bills",
+            "books": [
+                {
+                    "title": "Who Fears Death"
+                }
+            ]
+        },
+        {
+            "facebook_id": 0,
+            "name": "Vivan Shaw",
+            "gender": "f",
+            "interested_in_gender": "m",
+            "email": "vivan.shaw13@example.com",
+            "profile_img": "https://randomuser.me/api/portraits/women/39.jpg",
+            "birth_date": "2/2/1981",
+            "password": "windsurf",
+            "books": [
+                {
+                    
+                }
+            ]
+        },
+        {
+            "facebook_id": 0,
+            "name": "Edgar Perry",
+            "gender": "m",
+            "interested_in_gender": "f",
+            "email": "edgar.perry45@example.com",
+            "profile_img": "https://randomuser.me/api/portraits/men/45.jpg",
+            "birth_date": "12/7/1983",
+            "password": "3006",
+            "books": [
+                {
+                    "title": "Misstaget"
+                },
+                {
+                    "title": "Konsten att höra hjärtslag"
+                }
+            ]
+        },
+        {
+            "facebook_id": 0,
+            "name": "Bryan Ward",
+            "gender": "m",
+            "interested_in_gender": "f",
+            "email": "bryan.ward60@example.com",
+            "profile_img": "https://randomuser.me/api/portraits/men/84.jpg",
+            "birth_date": "10/6/1979",
+            "password": "cramps",
+            "books": [
+                {
+                    "title": "Begynnelse"
+                },
+                {
+                    "title": "Konsten att höra hjärtslag"
+                }
+            ]
+        },
+        {
+            "facebook_id": 0,
+            "name": "Harry Reed",
+            "gender": "m",
+            "interested_in_gender": "f",
+            "email": "harry.reed84@example.com",
+            "profile_img": "https://randomuser.me/api/portraits/men/11.jpg",
+            "birth_date": "1/7/1971",
+            "password": "serpent",
+            "books": [
+                {
+                    "title": "Dollar"
+                },
+                {
+                    "title": "Innan gryningen"
+                }
+            ]
+        },
+        {
+            "facebook_id": 0,
+            "name": "Allison Ruiz",
+            "gender": "f",
+            "interested_in_gender": "m",
+            "email": "allison.ruiz40@example.com",
+            "profile_img": "https://randomuser.me/api/portraits/women/72.jpg",
+            "birth_date": "1/2/1984",
+            "password": "lassie",
+            "books": [
+                {
+                    "title": "Dollar"
+                },
+                {
+                    "title": "Who Fears Death"
+                },
+                {
+                    "title": "Brinnande livet"
+                }
+            ]
+        }
+    ]
+}

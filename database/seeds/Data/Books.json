@@ -1,0 +1,95 @@
+{
+    "books": [
+        {
+            "title": "Dollar",
+            "original_title": "Killing Floor",
+            "slug": "dollar",
+            "published": "2016",
+            "pages": "365",
+            "cover": "http://www.emmaskrypin.se/wp-content/uploads/2014/08/child-lee-dollar.jpg",
+            "authors": [
+                {
+                    "name": "Lee Child"
+                }
+            ]
+        },
+        {
+            "title": "Misstaget",
+            "original_title": "The Hard Way",
+            "slug": "misstaget",
+            "published": "2006",
+            "pages": "382",
+            "cover": "https://kirja.elisa.fi/sites/default/files/bookcovers/1038464_201703022108.jpg",
+            "authors": [
+                {
+                    "name": "Lee Child"
+                }
+            ]
+        },
+        {
+            "title": "Begynnelse",
+            "original_title": "Origin",
+            "slug": "begynnelse",
+            "published": "2017",
+            "pages": "520",
+            "cover": "http://media.bonnierforlagen.se/bokbilder/tif/9789100173043.jpg",
+            "authors": [
+                {
+                    "name": "Dan Brown"
+                }
+            ]
+        },
+        {
+            "title": "Konsten att höra hjärtslag",
+            "original_title": "The Art of Hearing Heartbeats",
+            "slug": "konsten-att-hora-hjartslag",
+            "published": "2015",
+            "pages": "332",
+            "cover": "http://media.bonnierforlagen.se/bokbilder/tif/9789137142463.jpg",
+            "authors": [
+                {
+                    "name": "Jan-Philipp Sendker"
+                }
+            ]
+        },
+        {
+            "title": "Who Fears Death",
+            "original_title": "Who Fears Death",
+            "slug": "who-fears-death",
+            "published": "2010",
+            "pages": "304",
+            "cover": "https://images.gr-assets.com/books/1348469489l/7767021.jpg",
+            "authors": [
+                {
+                    "name": "Nnedi Okorafor"
+                }
+            ]
+        },
+        {
+            "title": "Innan gryningen",
+            "original_title": "Innan gryningen",
+            "slug": "innan-gryningen",
+            "published": "2017",
+            "pages": "320",
+            "cover": "https://harpercollins.se/media/catalog/product/cache/1/image/fc9c4c4def2d35014e0f45d9c3107c5c/9/7/9789150922103.jpg",
+            "authors": [
+                {
+                    "name": "Nora Roberts"
+                }
+            ]
+        },
+        {
+            "title": "Brinnande livet",
+            "original_title": "Dear Life",
+            "slug": "brinnande-livet",
+            "published": "2012",
+            "pages": "304",
+            "cover": "http://www.fiktiviteter.se/wp-content/uploads/2013/12/brinnande-livet.jpg",
+            "authors": [
+                {
+                    "name": "Alice Munro"
+                }
+            ]
+        }
+    ]
+}
