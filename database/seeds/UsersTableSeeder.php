@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\User;
 use App\Book;
+use Faker\Factory;
 
 class UsersTableSeeder extends Seeder
 {
@@ -14,6 +15,8 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $users = json_decode(file_get_contents(database_path() . '/seeds/Data/Users.json'));
+
+        $faker = Factory::create();
         
         foreach ($users->users as $user) {
             $newUser = User::create([
@@ -33,7 +36,9 @@ class UsersTableSeeder extends Seeder
                 }
                 $book = Book::where('title', $book->title)->first();
 
-                $newUser->books()->attach($book->id);
+                $newUser->books()->attach($book->id, [
+                    'comment' => $faker->sentence(15)
+                ]);
             }
         }
     }
