@@ -29,7 +29,12 @@ class User extends Authenticatable
 
     public static function getTransformer()
     {
-        return new \App\Http\Transformer\UserTransformer;
+        return \App\Http\Transformer\UserTransformer::class;
+    }
+
+    public static function getIncludes()
+    {
+        return ['like'];
     }
 
     public static function getUser($request)

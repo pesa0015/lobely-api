@@ -32,7 +32,9 @@ class BookController extends CustomController
 
         if ($request->has('showUsers') && $onMyBookshelf) {
             $usersRaw = $bookRaw->users()->where('user_id', '!=', $this->user->id)->get();
-            $users = $this->transform->collection($usersRaw, User::getTransformer());
+
+            $this->transform->setBook($bookRaw);
+            $users = $this->transform->collection($usersRaw, User::getTransformer(), User::getIncludes());
 
             return response()->json($users);
         }

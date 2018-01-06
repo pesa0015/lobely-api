@@ -11,12 +11,27 @@ class Transform
 {
     private $fractal;
     private $user;
+    private $book = null;
 
     public function __construct(User $user)
     {
         $this->fractal = new Manager();
         $this->fractal->setSerializer(new ArraySerializer());
         $this->user = $user;
+    }
+
+    public function setBook($book)
+    {
+        $this->book = $book;
+    }
+
+    public function getTransformer($transformer)
+    {
+        if (is_null($this->book)) {
+            return new $transformer($this->user);
+        } else {
+            return new $transformer($this->user, $this->book);
+        }
     }
 
     /**
@@ -28,7 +43,7 @@ class Transform
         if ($includes) {
             $this->fractal->parseIncludes($includes);
         }
-        $transformData = new Resource\Collection($rawCollection, new $transformerController($this->user));
+        $transformData = new Resource\Collection($rawCollection, $this->getTransformer($transformerController));
 
         $data = current($this->fractal->createData($transformData)->toArray());
 
@@ -44,7 +59,7 @@ class Transform
         if ($includes) {
             $this->fractal->parseIncludes($includes);
         }
-        $transformData = new Resource\Item($rawCollection, new $transformerController($this->user));
+        $transformData = new Resource\Item($rawCollection, $this->getTransformer($transformerController));
 
         $data = json_decode($this->fractal->createData($transformData)->toJson());
 
