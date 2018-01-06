@@ -20,6 +20,7 @@ class RegisterController extends Controller
         $user = User::create([
             'facebook_id' => 0,
             'name'        => $request->name,
+            'slug'        => User::generateSlug($request->name),
             'email'       => $request->email,
             'gender'      => $request->gender,
             'password'    => bcrypt($request->password)

@@ -48,4 +48,21 @@ class User extends Authenticatable
             ->withPivot('comment')
             ->withTimestamps();
     }
+
+    public static function generateSlug($slug)
+    {
+        $unique = false;
+
+        while (!$unique) {
+            $newSlug = str_slug($slug) . '-' . str_random(8);
+
+            $user = self::where('slug', 'LIKE', $newSlug)->first();
+
+            if (!$user) {
+                $unique = true;
+            }
+        }
+
+        return $newSlug;
+    }
 }

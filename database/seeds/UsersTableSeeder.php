@@ -22,6 +22,7 @@ class UsersTableSeeder extends Seeder
             $newUser = User::create([
                 'facebook_id' => $user->facebook_id,
                 'name' => $user->name,
+                'slug' => User::generateSlug($user->name),
                 'gender' => $user->gender,
                 'interested_in_gender' => $user->interested_in_gender,
                 'email' => $user->email,

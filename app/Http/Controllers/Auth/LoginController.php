@@ -28,6 +28,7 @@ class LoginController extends Controller
         if (!$user) {
             $user = User::create([
                 'facebook_id' => $request->facebook_id,
+                'slug' => User::generateSlug($request->name),
                 'name' => $request->name,
                 'email' => $request->email,
                 'gender' => $request->gender

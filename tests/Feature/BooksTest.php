@@ -135,6 +135,7 @@ class BooksTest extends TestCase
 
         for ($i = 0; $i < $usersWithComments->count(); $i++) {
             $response->assertJsonFragment([
+                'slug' => $usersWithComments[$i]->slug,
                 'name' => $usersWithComments[$i]->name,
                 'birthDate' => $usersWithComments[$i]->birth_date,
                 'like' => [
@@ -145,6 +146,7 @@ class BooksTest extends TestCase
 
         for ($i = 0; $i < $usersWithoutComments->count(); $i++) {
             $response->assertJsonFragment([
+                'slug' => $usersWithComments[$i]->slug,
                 'name' => $usersWithoutComments[$i]->name,
                 'birthDate' => $usersWithoutComments[$i]->birth_date,
                 'like' => [
