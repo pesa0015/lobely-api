@@ -108,6 +108,57 @@ class BooksTest extends TestCase
     }
 
     /**
+     * @group showUsersThatLikedBook
+     *
+     */
+    public function testShowUsersThatLikedBook()
+    {
+        $user    = $this->newUser(true);
+
+        $book    = factory(Book::class)->create([
+            'title' => 'Test book',
+            'slug'  => 'test-book'
+        ]);
+
+        $user->user->books()->attach($book, ['comment' => 'test']);
+
+        $usersWithComments    = factory(\App\User::class, 8)->create()->each(function ($user) use ($book) {
+            $user->books()->attach($book, ['comment' => 'test comment']);
+        });
+
+        $usersWithoutComments = factory(\App\User::class, 2)->create()->each(function ($user) use ($book) {
+            $user->books()->attach($book);
+        });
+
+        $response = $this->callHttpWithToken('GET', 'books/' . $book->slug . '?showUsers=1', $user->token);
+        $response->assertStatus(200);
+
+        for ($i = 0; $i < $usersWithComments->count(); $i++) {
+            $response->assertJsonFragment([
+                'name' => $usersWithComments[$i]->name,
+                'birthDate' => $usersWithComments[$i]->birth_date,
+                'like' => [
+                    'comment' => $usersWithComments[$i]->books()->where('book_id', $book->id)->first()->pivot->comment
+                ]
+            ]);
+        }
+
+        for ($i = 0; $i < $usersWithoutComments->count(); $i++) {
+            $response->assertJsonFragment([
+                'name' => $usersWithoutComments[$i]->name,
+                'birthDate' => $usersWithoutComments[$i]->birth_date,
+                'like' => [
+                    'comment' => null
+                ]
+            ]);
+        }
+
+        $allUsers = $usersWithComments->merge($usersWithoutComments);
+
+        $this->assertEquals($allUsers->count(), count($response->getData()));
+    }
+
+    /**
      * @group storeBookshelf
      *
      */
