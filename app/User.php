@@ -56,7 +56,7 @@ class User extends Authenticatable
         while (!$unique) {
             $newSlug = str_slug($slug) . '-' . str_random(8);
 
-            $user = self::where('slug', 'LIKE', $newSlug)->first();
+            $user = self::where('slug', $newSlug)->first();
 
             if (!$user) {
                 $unique = true;
