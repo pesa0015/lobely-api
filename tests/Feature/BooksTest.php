@@ -167,7 +167,7 @@ class BooksTest extends TestCase
      * @group updateBookComment
      *
      */
-    public function testupdateBookComment()
+    public function testUpdateBookComment()
     {
         $user  = $this->newUser(true);
 
