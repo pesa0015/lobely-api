@@ -42,6 +42,11 @@ class User extends Authenticatable
         return $request->attributes->user;
     }
 
+    public function getFirstName()
+    {
+        return explode(' ', $this->name)[0];
+    }
+
     public function books()
     {
         return $this->belongsToMany('App\Book', 'bookshelves', 'user_id', 'book_id')

@@ -36,7 +36,7 @@ class LoginController extends Controller
             ]);
         }
         
-        $token = JWTAuth::fromUser($user);
+        $token = JWTAuth::fromUser($user, ['firstname' => $user->getFirstName()]);
 
         return response()->json(compact('token'));
     }
@@ -47,8 +47,12 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         try {
+            $user = User::where('email', $credentials['email'])->first();
+
+            $firstname = $user ? $user->getFirstName() : null;
+            
             // attempt to verify the credentials and create a token for the user
-            if (!$token = JWTAuth::attempt($credentials)) {
+            if (!$token = JWTAuth::attempt($credentials, ['firstname' => $firstname])) {
                 return response()->json(['error' => 'invalid_credentials'], 401);
             }
         } catch (JWTException $e) {
@@ -61,7 +65,7 @@ class LoginController extends Controller
         $firstname = explode(' ', $user->name)[0];
 
         // all good so return the token
-        return response()->json(compact('token', 'firstname'));
+        return response()->json(compact('token'));
     }
 
     public function logout()
