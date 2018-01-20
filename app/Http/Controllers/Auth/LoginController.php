@@ -32,7 +32,6 @@ class LoginController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'gender' => $request->gender
-                // 'password' => bcrypt($request->password)
             ]);
         }
         
@@ -50,7 +49,7 @@ class LoginController extends Controller
             $user = User::where('email', $credentials['email'])->first();
 
             $firstname = $user ? $user->getFirstName() : null;
-            
+
             // attempt to verify the credentials and create a token for the user
             if (!$token = JWTAuth::attempt($credentials, ['firstname' => $firstname])) {
                 return response()->json(['error' => 'invalid_credentials'], 401);
