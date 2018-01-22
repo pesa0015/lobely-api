@@ -59,6 +59,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Heart');
     }
 
+    public function haveLikedBook($bookId)
+    {
+        return $this->books()->where('book_id', $bookId)->exists();
+    }
+
     public static function generateSlug($slug)
     {
         $unique = false;
