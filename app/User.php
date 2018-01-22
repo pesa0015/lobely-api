@@ -54,6 +54,11 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    public function hearts()
+    {
+        return $this->hasMany('App\Heart');
+    }
+
     public static function generateSlug($slug)
     {
         $unique = false;
