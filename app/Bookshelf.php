@@ -29,4 +29,12 @@ class Bookshelf extends Model
     {
         return $this->belongsTo('App\Book', 'book_id')->withTimestamps();
     }
+
+    public function scopePartnerHaveLikedBook($query, $bookId, $userId)
+    {
+        return $query->where([
+            'book_id' => $bookId,
+            'user_id' => $userId
+        ])->exists();
+    }
 }
