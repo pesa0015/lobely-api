@@ -30,7 +30,7 @@ class HeartController extends CustomController
             return response()->json('partner_have_not_liked_book', 403);
         }
 
-        if ($this->user->hearts()->haveHeart($user->id, $book->id)) {
+        if ($this->user->hearts()->haveHeart($user->id)) {
             return response()->json('already_have_heart', 403);
         }
 
