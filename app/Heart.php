@@ -22,6 +22,6 @@ class Heart extends Model
 
     public function scopeHaveHeart($query, $userId)
     {
-        return $query->where('heart_user_id', $userId)->exists();
+        return $query->where('heart_user_id', $userId);
     }
 }
