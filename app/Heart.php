@@ -20,7 +20,7 @@ class Heart extends Model
         return $this->belongsTo(Book::class);
     }
 
-    public function scopeHaveHeart($query, $userId)
+    public function scopeToUser($query, $userId)
     {
         return $query->where('heart_user_id', $userId)->orWHere('user_id', $userId);
     }
