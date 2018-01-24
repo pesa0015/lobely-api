@@ -54,9 +54,14 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
-    public function hearts()
+    public function heartsToPartner()
     {
         return $this->hasMany('App\Heart');
+    }
+
+    public function heartsToMe()
+    {
+        return $this->hasMany('App\Heart', 'heart_user_id');
     }
 
     public function haveLikedBook($bookId)

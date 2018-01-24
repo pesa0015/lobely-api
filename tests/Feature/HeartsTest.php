@@ -102,4 +102,68 @@ class HeartsTest extends TestCase
             'book_id'       => $book->id
         ]);
     }
+
+    /**
+     * @group deleteHeart
+     *
+     */
+    public function testDeleteHeart()
+    {
+        $me = $this->newUser(true);
+
+        $token = $me->token;
+
+        $book = factory(Book::class)->create();
+        $bookshelf = factory(Bookshelf::class)->create();
+
+        $user = factory(User::class)->create();
+        $user->books()->attach($book);
+
+        $response = $this->callHttpWithToken('DELETE', 'hearts/' . $user->id, $token);
+        $response->assertStatus(403);
+
+        $this->assertEquals($response->getData(), 'have_not_liked_user');
+
+        \App\Heart::create([
+            'user_id'       => $user->id,
+            'heart_user_id' => $me->user->id,
+            'book_id'       => $book->id
+        ]);
+
+        $this->assertDatabaseHas('hearts', [
+            'user_id'       => $user->id,
+            'heart_user_id' => $me->user->id,
+            'book_id'       => $book->id
+        ]);
+
+        $response = $this->callHttpWithToken('DELETE', 'hearts/' . $user->id, $token);
+        $response->assertStatus(200);
+
+        $this->assertDatabaseMissing('hearts', [
+            'user_id'       => $user->id,
+            'heart_user_id' => $me->user->id,
+            'book_id'       => $book->id
+        ]);
+
+        \App\Heart::create([
+            'user_id'       => $me->user->id,
+            'heart_user_id' => $user->id,
+            'book_id'       => $book->id
+        ]);
+
+        $this->assertDatabaseHas('hearts', [
+            'user_id'       => $me->user->id,
+            'heart_user_id' => $user->id,
+            'book_id'       => $book->id
+        ]);
+
+        $response = $this->callHttpWithToken('DELETE', 'hearts/' . $user->id, $token);
+        $response->assertStatus(200);
+
+        $this->assertDatabaseMissing('hearts', [
+            'user_id'       => $me->user->id,
+            'heart_user_id' => $user->id,
+            'book_id'       => $book->id
+        ]);
+    }
 }

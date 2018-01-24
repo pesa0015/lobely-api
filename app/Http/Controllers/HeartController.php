@@ -30,7 +30,7 @@ class HeartController extends CustomController
             return response()->json('partner_have_not_liked_book', 403);
         }
 
-        if ($this->user->hearts()->toUser($user->id)->exists()) {
+        if ($this->user->heartsToPartner()->forUser($user->id)->exists()) {
             return response()->json('already_have_heart', 403);
         }
 
@@ -41,5 +41,34 @@ class HeartController extends CustomController
         ]);
 
         return response()->json([], 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+
+        $fromPartner = $this->user->heartsToMe()->forUser($user->id);
+
+        if ($fromPartner->exists()) {
+            $fromPartner->delete();
+
+            return response()->json([], 200);
+        }
+
+        $toPartner = $this->user->heartsToPartner()->forUser($user->id);
+
+        if ($toPartner->exists()) {
+            $toPartner->delete();
+
+            return response()->json([], 200);
+        }
+        
+        return response()->json('have_not_liked_user', 403);
     }
 }
