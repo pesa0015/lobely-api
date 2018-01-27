@@ -3,12 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Validator;
 use App\Book;
 use App\Bookshelf;
 use App\User;
-use Auth;
-use Carbon\Carbon;
 
 class BookController extends CustomController
 {
