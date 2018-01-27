@@ -30,7 +30,8 @@ class UserTransformer extends Fractal\TransformerAbstract
             'gender'             => $user->gender,
             'interestedInGender' => $user->interested_in_gender,
             'birthDate'          => $user->birth_date,
-            'bio'                => $user->bio
+            'bio'                => $user->bio,
+            'heart'              => $user->heartsToPartner->first() || $user->heartsToMe->first()
         ];
     }
 

@@ -31,7 +31,9 @@ class BookController extends CustomController
         $onMyBookshelf = $bookRaw->users()->where('user_id', $this->user->id)->exists();
 
         if ($request->has('showUsers') && $onMyBookshelf) {
-            $usersRaw = $bookRaw->users()->where('user_id', '!=', $this->user->id)->get();
+            $usersRaw = $bookRaw->users()->with(['heartsToPartner', 'heartsToMe'])
+                ->where('user_id', '!=', $this->user->id)
+                ->get();
 
             $this->transform->setBook($bookRaw);
             $users = $this->transform->collection($usersRaw, User::getTransformer(), User::getIncludes());
