@@ -38,8 +38,6 @@ class UserTest extends TestCase
      */
     public function testLoginAsNewUserWithFacebook()
     {
-        $user = $this->newUser(false, true);
-
         $response = $this->callHttp('POST', '/auth/facebook', [
             'facebook_id' => 2,
             'name' => 'Test',
@@ -50,6 +48,32 @@ class UserTest extends TestCase
 
         $response->assertJsonStructure([
             'token'
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'facebook_id' => 2,
+            'name' => 'Test',
+            'email' => 'test@gmail.com',
+            'gender' => 'm'
+        ]);
+
+        $response = $this->callHttp('POST', '/auth/facebook', [
+            'facebook_id' => 3,
+            'name' => 'Test3',
+            'email' => 'test3@gmail.com',
+            'gender' => 'female',
+            'password' => 'test'
+        ]);
+
+        $response->assertJsonStructure([
+            'token'
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'facebook_id' => 3,
+            'name' => 'Test3',
+            'email' => 'test3@gmail.com',
+            'gender' => 'f'
         ]);
     }
 
