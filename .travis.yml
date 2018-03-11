@@ -12,6 +12,6 @@ before_script:
 jobs:
   include:
     - stage: test
-      script: vendor/bin/phpcs --standard=PSR2 --colors app/
+      script: sh psr.sh
     -
       script: vendor/bin/phpunit --coverage-text
