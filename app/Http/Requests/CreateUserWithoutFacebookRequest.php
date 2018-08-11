@@ -7,7 +7,6 @@ use App\Http\Requests\Request;
 class CreateUserWithoutFacebookRequest extends Request
 {
     protected $rules = [
-        'facebook_id' => 'null',
         'name'        => 'required|string|min:4',
         'email'       => 'required|unique:users|string',
         'gender'      => 'required|string',
