@@ -20,7 +20,7 @@ class UserTest extends TestCase
         $user = $this->newUser(false, true);
 
         $response = $this->callHttp('POST', '/auth/facebook', [
-            'facebook_id' => $user->user->facebook_id,
+            'facebookId' => $user->user->facebook_id,
             'name' => $user->user->name,
             'email' => $user->user->email,
             'gender' => $user->user->gender,
@@ -39,7 +39,7 @@ class UserTest extends TestCase
     public function testLoginAsNewUserWithFacebook()
     {
         $response = $this->callHttp('POST', '/auth/facebook', [
-            'facebook_id' => 2,
+            'facebookId' => 2,
             'name' => 'Test',
             'email' => 'test@gmail.com',
             'gender' => 'male',
@@ -58,7 +58,7 @@ class UserTest extends TestCase
         ]);
 
         $response = $this->callHttp('POST', '/auth/facebook', [
-            'facebook_id' => 3,
+            'facebookId' => 3,
             'name' => 'Test3',
             'email' => 'test3@gmail.com',
             'gender' => 'female',
@@ -104,7 +104,7 @@ class UserTest extends TestCase
         $user = $this->newUser(false, true);
 
         $token = $this->call('POST', '/auth/facebook', [
-            'facebook_id' => $user->user->facebook_id,
+            'facebookId' => $user->user->facebook_id,
             'name' => $user->user->name,
             'email' => $user->user->email,
             'gender' => $user->user->gender,

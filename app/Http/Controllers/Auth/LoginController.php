@@ -23,13 +23,13 @@ class LoginController extends Controller
 
     public function loginWithFacebook(Request $request)
     {
-        $user = User::where('facebook_id', $request->facebook_id)->first();
+        $user = User::where('facebook_id', $request->facebookId)->first();
 
         $gender = $request->gender === 'female' ? 'f' : 'm';
 
         if (!$user) {
             $user = User::create([
-                'facebook_id' => $request->facebook_id,
+                'facebook_id' => $request->facebookId,
                 'slug' => User::generateSlug($request->name),
                 'name' => $request->name,
                 'email' => $request->email,
