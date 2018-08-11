@@ -10,8 +10,8 @@ class UpdateProfileRequest extends Request
         'name'  => 'required|string',
         'email' => 'required|email',
         'gender' => 'required|string',
-        'interested_in_gender' => 'required|string',
-        'birth_date' => 'required|string'
+        'interestedInGender' => 'required|string',
+        'birthDate' => 'required|string'
     ];
 
     /**

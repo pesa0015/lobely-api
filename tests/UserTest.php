@@ -203,8 +203,8 @@ class UserTest extends TestCase
         $payload = [
             'name'  => $user->user->name,
             'gender' => $user->user->gender,
-            'interested_in_gender' => $user->user->interested_in_gender,
-            'birth_date' => $user->user->birth_date,
+            'interestedInGender' => $user->user->interested_in_gender,
+            'birthDate' => $user->user->birth_date,
             'email' => 'test@example.com',
             'bio'   => 'Some text about me'
         ];
@@ -246,8 +246,8 @@ class UserTest extends TestCase
             'email'    => 'peters945@hotmail.com',
             'gender'   => 'male',
             'password' => 'Test123',
-            'birth_date' => '10/1/1978',
-            'interested_in_gender' => 'f'
+            'birthDate' => '10/1/1978',
+            'interestedInGender' => 'f'
         ];
 
         $response = $this->callHttp('POST', '/register', $newUserWithSameEmail);
