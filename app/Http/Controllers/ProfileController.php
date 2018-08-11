@@ -40,16 +40,14 @@ class ProfileController extends CustomController
      */
     public function updatePassword(UpdatePasswordRequest $request)
     {
-        $currentPassword   = $request->current;
-
-        $credentials = ['email' => $this->user->email, 'password' => $currentPassword];
+        $credentials = ['email' => $this->user->email, 'password' => $request->currentPassword];
 
         if (!\JWTAuth::attempt($credentials)) {
             return response()->json('user_not_allowed', 403);
         }
 
-        $new       = $request->new;
-        $repeatNew = $request->repeatNew;
+        $new       = $request->newPassword;
+        $repeatNew = $request->repeatNewPassword;
 
         if ($new != $repeatNew) {
             return response()->json('password_incorrect', 403);

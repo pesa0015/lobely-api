@@ -291,9 +291,9 @@ class UserTest extends TestCase
         $user = $this->newUser(true, true);
 
         $payload = [
-            'current'   => $user->password,
-            'new'       => 'test123',
-            'repeatNew' => 'test123'
+            'currentPassword'   => $user->password,
+            'newPassword'       => 'test123',
+            'repeatNewPassword' => 'test123'
         ];
 
         $this->assertDatabaseHas('users', [
@@ -318,9 +318,9 @@ class UserTest extends TestCase
         $user = $this->newUser(true, true);
 
         $payload = [
-            'current'   => 'current',
-            'new'       => 'test123',
-            'repeatNew' => 'test123'
+            'currentPassword'   => 'current',
+            'newPassword'       => 'test123',
+            'repeatNewPassword' => 'test123'
         ];
 
         $this->assertDatabaseHas('users', [

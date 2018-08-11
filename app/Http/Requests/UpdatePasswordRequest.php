@@ -7,9 +7,9 @@ use App\Http\Requests\Request;
 class UpdatePasswordRequest extends Request
 {
     protected $rules = [
-        'current'   => 'required|string',
-        'new'       => 'required|min:5',
-        'repeatNew' => 'required|min:5'
+        'currentPassword'   => 'required|string',
+        'newPassword'       => 'required|min:5',
+        'repeatNewPassword' => 'required|min:5'
     ];
 
     /**
