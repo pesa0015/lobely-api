@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Author;
+use App\Book;
 
 class AuthorsTableSeeder extends Seeder
 {
@@ -17,5 +18,7 @@ class AuthorsTableSeeder extends Seeder
         foreach ($authors->authors as $author) {
             Author::create((array)$author);
         }
+
+        factory('App\Author', 10)->create();
     }
 }

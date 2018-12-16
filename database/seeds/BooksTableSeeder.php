@@ -25,12 +25,14 @@ class BooksTableSeeder extends Seeder
                 'pages' => $book->pages,
                 'cover' => $book->cover
             ]);
-
             foreach ($book->authors as $author) {
                 $author = Author::where('name', $author->name)->first();
-
                 $newBook->authors()->attach($author->id);
             }
         }
+
+        factory('App\Book', 50)->create()->each(function ($book) {
+            $book->authors()->save(Author::inRandomOrder()->first());
+        });
     }
 }
