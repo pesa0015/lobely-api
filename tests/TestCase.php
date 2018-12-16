@@ -50,7 +50,7 @@ abstract class TestCase extends \Illuminate\Foundation\Testing\TestCase
         if ($token)
             $JWTToken = \JWTAuth::fromUser($user);
         if ($returnPassword)
-            $passwordRaw = 'secret';
+            $passwordRaw = 'test';
         // \JWTAuth::setToken($JWTToken);
         return (object) ['user' => $user, 'token' => $JWTToken, 'password' => $passwordRaw];
     }
