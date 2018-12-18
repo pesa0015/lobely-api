@@ -66,7 +66,7 @@ class ProfileController extends CustomController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function me()
     {
         $userRaw = User::findOrFail($this->user->id);
 
