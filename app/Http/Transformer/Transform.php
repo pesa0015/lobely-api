@@ -61,7 +61,7 @@ class Transform
         }
         $transformData = new Resource\Item($rawCollection, $this->getTransformer($transformerController));
 
-        $data = json_decode($this->fractal->createData($transformData)->toJson());
+        $data = $this->fractal->createData($transformData)->toArray();
 
         return $data;
     }
