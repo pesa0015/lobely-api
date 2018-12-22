@@ -93,13 +93,11 @@ class BooksTest extends TestCase
             'title' => $book->title,
             'slug'  => $book->slug,
             'authors' => [
-                'data' => [
-                    0 => [
-                        'name' => $author1->name
-                    ],
-                    1 => [
-                        'name' => $author2->name
-                    ]
+                0 => [
+                    'name' => $author1->name
+                ],
+                1 => [
+                    'name' => $author2->name
                 ]
             ],
             'liked' => true,

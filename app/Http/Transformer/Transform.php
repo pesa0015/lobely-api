@@ -4,7 +4,7 @@ namespace App\Http\Transformer;
 
 use League\Fractal\Manager;
 use League\Fractal\Resource;
-use League\Fractal\Serializer\ArraySerializer;
+use App\Serializers\Serializer;
 use App\User;
 
 class Transform
@@ -16,7 +16,7 @@ class Transform
     public function __construct(User $user)
     {
         $this->fractal = new Manager();
-        $this->fractal->setSerializer(new ArraySerializer());
+        $this->fractal->setSerializer(new Serializer());
         $this->user = $user;
     }
 
@@ -38,12 +38,15 @@ class Transform
      * Transform collection
      *
      */
-    public function collection($rawCollection, $transformerController, $includes = false)
+    public function collection($rawCollection, $transformerController, array $includes = [])
     {
         if ($includes) {
             $this->fractal->parseIncludes($includes);
         }
-        $transformData = new Resource\Collection($rawCollection, $this->getTransformer($transformerController));
+
+        $transformer = $this->getTransformer($transformerController);
+
+        $transformData = new Resource\Collection($rawCollection, $transformer, implode(',', $includes));
 
         $data = current($this->fractal->createData($transformData)->toArray());
 
@@ -54,12 +57,15 @@ class Transform
      * Transform item
      *
      */
-    public function item($rawCollection, $transformerController, $includes = false)
+    public function item($rawCollection, $transformerController, array $includes = [])
     {
         if ($includes) {
             $this->fractal->parseIncludes($includes);
         }
-        $transformData = new Resource\Item($rawCollection, $this->getTransformer($transformerController));
+
+        $transformer = $this->getTransformer($transformerController);
+
+        $transformData = new Resource\Item($rawCollection, $transformer, implode(',', $includes));
 
         $data = $this->fractal->createData($transformData)->toArray();
 
