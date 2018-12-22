@@ -11,6 +11,13 @@ class UserTest extends TestCase
      *
      *=========================================*/
 
+    private function showProfile($token)
+    {
+        $response = $this->callHttpWithToken('GET', '/user/profile', $token);
+
+        return $response;
+    }
+
     /**
      * @group loginExistingUserWithFacebook
      * Tests login with Facebook
@@ -27,9 +34,10 @@ class UserTest extends TestCase
             'password' => $user->password
         ]);
 
-        $response->assertJsonStructure([
-            'token'
-        ]);
+        $token = $response->getData();
+
+        $this->showProfile($token)
+            ->assertStatus(200);
     }
 
     /**
@@ -46,9 +54,10 @@ class UserTest extends TestCase
             'password' => 'test'
         ]);
 
-        $response->assertJsonStructure([
-            'token'
-        ]);
+        $token = $response->getData();
+
+        $this->showProfile($token)
+            ->assertStatus(200);
 
         $this->assertDatabaseHas('users', [
             'facebook_id' => 2,
@@ -65,9 +74,10 @@ class UserTest extends TestCase
             'password' => 'test'
         ]);
 
-        $response->assertJsonStructure([
-            'token'
-        ]);
+        $token = $response->getData();
+
+        $this->showProfile($token)
+            ->assertStatus(200);
 
         $this->assertDatabaseHas('users', [
             'facebook_id' => 3,
@@ -90,9 +100,10 @@ class UserTest extends TestCase
             'password' => $user->password
         ]);
 
-        $response->assertJsonStructure([
-            'token'
-        ]);
+        $token = $response->getData();
+
+        $this->showProfile($token)
+            ->assertStatus(200);
     }
 
     /**
@@ -103,13 +114,15 @@ class UserTest extends TestCase
     {
         $user = $this->newUser(false, true);
 
-        $token = $this->call('POST', '/auth/facebook', [
+        $response = $this->call('POST', '/auth/facebook', [
             'facebookId' => $user->user->facebook_id,
             'name' => $user->user->name,
             'email' => $user->user->email,
             'gender' => $user->user->gender,
             'password' => $user->password
-        ])->getData()->token;
+        ]);
+
+        $token = $response->getData();
 
         $response = $this->callHttpWithToken('POST', '/logout', $token);
 

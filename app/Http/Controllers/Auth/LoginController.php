@@ -39,7 +39,7 @@ class LoginController extends Controller
         
         $token = JWTAuth::fromUser($user, ['firstname' => $user->getFirstName()]);
 
-        return response()->json(compact('token'));
+        return response()->json($token);
     }
 
     public function authenticate(Request $request)
@@ -66,7 +66,7 @@ class LoginController extends Controller
         $firstname = explode(' ', $user->name)[0];
 
         // all good so return the token
-        return response()->json(compact('token'));
+        return response()->json($token);
     }
 
     public function logout()
