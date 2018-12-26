@@ -35,11 +35,6 @@ class UserTransformer extends Fractal\TransformerAbstract
         ];
     }
 
-    /**
-     * Include like
-     *
-     * @return League\Fractal\CollectionResource
-     */
     public function includeLike(User $user)
     {
         $comment = \App\Bookshelf::where('user_id', $user->id)->where('book_id', $this->book->id)->first();
