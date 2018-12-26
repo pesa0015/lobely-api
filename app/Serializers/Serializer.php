@@ -14,13 +14,4 @@ class Serializer extends ArraySerializer
 
         return $data;
     }
-
-    public function item($resourceKey, array $data)
-    {
-        if ($resourceKey) {
-            return [$resourceKey => $data];
-        }
-        
-        return $data;
-    }
 }
