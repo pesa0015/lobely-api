@@ -88,7 +88,7 @@ class BooksTest extends TestCase
 
         $response = $this->callHttpWithToken('GET', 'books/' . $book->slug, $user->token);
         $response->assertStatus(200);
-        $response->assertJsonFragment([
+        $response->assertJson([
             'id'    => $book->id,
             'title' => $book->title,
             'slug'  => $book->slug,
