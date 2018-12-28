@@ -6,11 +6,6 @@ use App\User;
 
 class UserTest extends TestCase
 {
-    /**
-     * All tests in this class are using the api
-     *
-     *=========================================*/
-
     private function showProfile($token)
     {
         $response = $this->callHttpWithToken('GET', '/user/profile', $token);
