@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 use App\User;
@@ -71,6 +72,35 @@ class ProfileController extends CustomController
         $userRaw = User::findOrFail($this->user->id);
 
         $user = $this->transform->item($userRaw, User::getTransformer());
+
+        return response()->json($user);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Request $request, $slug)
+    {
+        $foundUser = User::where('slug', $slug)->firstOrFail();
+
+        if ($request->filled('book')) {
+            $book = \App\Book::where('slug', $request->book)->firstOrFail();
+
+            $userRaw = $foundUser->load(['books' => function ($query) use ($foundUser, $book) {
+                return $query->where('user_id', $foundUser->id)->where('book_id', $book->id);
+            }]);
+
+            $this->transform->setBook($book);
+            $includes = ['books', 'book', 'like'];
+        } else {
+            $userRaw  = $foundUser;
+            $includes = ['books'];
+        }
+
+        $user = $this->transform->item($userRaw, User::getTransformer(), $includes);
 
         return response()->json($user);
     }

@@ -9,7 +9,7 @@ use App\Book;
 class UserTransformer extends Fractal\TransformerAbstract
 {
     protected $availableIncludes = [
-        'like'
+        'like', 'books', 'book'
     ];
 
     private $book;
@@ -40,5 +40,17 @@ class UserTransformer extends Fractal\TransformerAbstract
         $comment = \App\Bookshelf::where('user_id', $user->id)->where('book_id', $this->book->id)->first();
 
         return $this->item($comment, new BookCommentTransformer);
+    }
+
+    public function includeBooks(User $user)
+    {
+        $books = $user->books;
+
+        return $this->collection($books, new BookTransformer);
+    }
+
+    public function includeBook()
+    {
+        return $this->item($this->book, new BookTransformer);
     }
 }
