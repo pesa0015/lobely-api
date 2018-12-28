@@ -22,12 +22,12 @@ class Bookshelf extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id')->withTimestamps();
+        return $this->belongsTo('App\User', 'user_id');
     }
 
     public function book()
     {
-        return $this->belongsTo('App\Book', 'book_id')->withTimestamps();
+        return $this->belongsTo('App\Book', 'book_id');
     }
 
     public function scopePartnerHaveLikedBook($query, $bookId, $userId)
