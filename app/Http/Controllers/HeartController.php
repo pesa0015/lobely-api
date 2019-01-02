@@ -30,7 +30,7 @@ class HeartController extends CustomController
             return response()->json('partner_have_not_liked_book', 403);
         }
 
-        if ($this->user->heartsToPartner()->forUser($user->id)->exists()) {
+        if ($this->user->heartsToPartner()->exists()) {
             return response()->json('already_have_heart', 403);
         }
 
@@ -53,18 +53,18 @@ class HeartController extends CustomController
     {
         $user = User::findOrFail($id);
 
-        $fromPartner = $this->user->heartsToMe()->forUser($user->id);
+        $fromPartner = $this->user->heartsToMe()->where('user_id', $user->id);
 
         if ($fromPartner->exists()) {
-            $fromPartner->delete();
+            $fromPartner->first()->pivot->delete();
 
             return response()->json([], 200);
         }
 
-        $toPartner = $this->user->heartsToPartner()->forUser($user->id);
+        $toPartner = $this->user->heartsToPartner()->where('heart_user_id', $user->id);
 
         if ($toPartner->exists()) {
-            $toPartner->delete();
+            $toPartner->first()->pivot->delete();
 
             return response()->json([], 200);
         }
