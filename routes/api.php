@@ -22,6 +22,7 @@ Route::group(['namespace' => 'Auth'], function () {
 Route::group(['middleware' => ['jwt.auth']], function () {
     Route::resource('books', 'BookController', ['only' => ['index', 'show']]);
     Route::resource('bookshelfs', 'BookshelfController', ['only' => ['index', 'store', 'update', 'destroy']]);
+    Route::get('notifications/count', 'HeartController@countNotifications');
     Route::get('notifications', 'HeartController@notifications');
     Route::resource('hearts', 'HeartController', ['only' => ['store', 'destroy']]);
     Route::get('search', 'SearchController@search');

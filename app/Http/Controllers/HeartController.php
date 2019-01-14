@@ -82,4 +82,11 @@ class HeartController extends CustomController
 
         return response()->json($notifications);
     }
+
+    public function countNotifications()
+    {
+        $count = $this->user->heartsToMe()->where('have_read', false)->count();
+
+        return response()->json(['count' => $count]);
+    }
 }

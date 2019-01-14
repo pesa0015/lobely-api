@@ -208,4 +208,21 @@ class HeartsTest extends TestCase
             $this->assertNotEmpty($user->book);
         }
     }
+
+    /**
+     * @group getCountNotifications
+     *
+     */
+    public function testGetCountNotifications()
+    {
+        $me = $this->newUser(true);
+
+        $token = $me->token;
+
+        $hearts = factory(\App\Heart::class, rand(1, 3))->create(['heart_user_id' => $me->user->id]);
+
+        $response = $this->callHttpWithToken('GET', 'notifications/count', $token)
+            ->assertStatus(200)
+            ->assertJson(['count' => $hearts->count()]);
+    }
 }
