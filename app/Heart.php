@@ -6,8 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Heart extends Model
 {
+    const STATUS_PENDING  = 0;
+    const STATUS_APPROVED = 1;
+    const STATUS_DENIED   = 2;
+
     protected $fillable = [
-        'user_id', 'heart_user_id', 'book_id'
+        'user_id', 'heart_user_id', 'book_id', 'status', 'have_read'
     ];
 
     public function user()
