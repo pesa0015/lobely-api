@@ -71,4 +71,15 @@ class HeartController extends CustomController
         
         return response()->json('have_not_liked_user', 403);
     }
+
+    public function notifications()
+    {
+        $users = $this->user->heartsToMe()->where('have_read', false)->with('book')->get();
+
+        $transformer = new \App\Http\Transformer\UserTransformer;
+
+        $notifications = $this->transform->collection($users, $transformer, ['book']);
+
+        return response()->json($notifications);
+    }
 }

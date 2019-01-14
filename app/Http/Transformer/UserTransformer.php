@@ -14,7 +14,7 @@ class UserTransformer extends Fractal\TransformerAbstract
 
     private $book;
 
-    public function __construct(User $user, Book $book = null)
+    public function __construct(User $user = null, Book $book = null)
     {
         $this->book = $book;
     }
@@ -49,8 +49,10 @@ class UserTransformer extends Fractal\TransformerAbstract
         return $this->collection($books, new BookTransformer);
     }
 
-    public function includeBook()
+    public function includeBook(User $user)
     {
-        return $this->item($this->book, new BookTransformer);
+        $book = $user->book->first() ?? $this->book;
+
+        return $this->item($book, new BookTransformer);
     }
 }

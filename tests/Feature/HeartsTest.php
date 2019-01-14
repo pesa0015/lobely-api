@@ -166,4 +166,46 @@ class HeartsTest extends TestCase
             'book_id'       => $book->id
         ]);
     }
+
+    /**
+     * @group getNotifications
+     *
+     */
+    public function testGetNotifications()
+    {
+        $me = $this->newUser(true);
+
+        $token = $me->token;
+
+        $hearts = factory(\App\Heart::class, rand(1, 3))->create(['heart_user_id' => $me->user->id]);
+
+        $response = $this->callHttpWithToken('GET', 'notifications', $token)
+            ->assertStatus(200)
+            ->assertJsonStructure([
+                '*' => [
+                    'id',
+                    'name',
+                    'slug',
+                    'book' => [
+                        'id',
+                        'title',
+                        'slug',
+                    ]
+                ]
+            ]);
+
+        $users = $me->user->heartsToMe()->where('have_read', false)->with('book')->get();
+
+        $this->assertEquals($users->count(), count($response->getdata()));
+
+        foreach ($users as $user) {
+            $response->assertJsonFragment([
+                'id'   => $user->id,
+                'name' => $user->name,
+                'slug' => $user->slug,
+            ]);
+
+            $this->assertNotEmpty($user->book);
+        }
+    }
 }

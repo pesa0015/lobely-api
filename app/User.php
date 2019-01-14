@@ -54,6 +54,11 @@ class User extends Authenticatable
             ->withTimestamps();
     }
 
+    public function book()
+    {
+        return $this->belongsToMany('App\Book', 'hearts', 'user_id', 'book_id');
+    }
+
     public function heartsToPartner()
     {
         return $this->belongsToMany('App\User', 'hearts', 'user_id');
