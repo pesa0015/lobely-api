@@ -30,7 +30,7 @@ class HeartController extends CustomController
             return response()->json('partner_have_not_liked_book', 403);
         }
 
-        if ($this->user->heartsToPartner()->exists()) {
+        if ($this->user->heartsToPartner()->forUser($user->id)->exists()) {
             return response()->json('already_have_heart', 403);
         }
 
@@ -53,18 +53,18 @@ class HeartController extends CustomController
     {
         $user = User::findOrFail($id);
 
-        $fromPartner = $this->user->heartsToMe()->where('user_id', $user->id);
+        $fromPartner = $this->user->heartsToMe()->forUser($user->id);
 
         if ($fromPartner->exists()) {
-            $fromPartner->first()->pivot->delete();
+            $fromPartner->delete();
 
             return response()->json([], 200);
         }
 
-        $toPartner = $this->user->heartsToPartner()->where('heart_user_id', $user->id);
+        $toPartner = $this->user->heartsToPartner()->forUser($user->id);
 
         if ($toPartner->exists()) {
-            $toPartner->first()->pivot->delete();
+            $toPartner->delete();
 
             return response()->json([], 200);
         }
@@ -74,11 +74,11 @@ class HeartController extends CustomController
 
     public function notifications()
     {
-        $users = $this->user->heartsToMe()->where('have_read', false)->with('book')->get();
+        $hearts = $this->user->heartsToMe()->where('have_read', false)->with('user', 'book')->get();
 
-        $transformer = new \App\Http\Transformer\UserTransformer;
+        $transformer = new \App\Http\Transformer\HeartTransformer;
 
-        $notifications = $this->transform->collection($users, $transformer, ['book']);
+        $notifications = $this->transform->collection($hearts, $transformer, ['user', 'book']);
 
         return response()->json($notifications);
     }

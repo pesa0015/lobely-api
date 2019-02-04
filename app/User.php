@@ -61,12 +61,12 @@ class User extends Authenticatable
 
     public function heartsToPartner()
     {
-        return $this->belongsToMany('App\User', 'hearts', 'user_id');
+        return $this->hasMany('App\Heart');
     }
 
     public function heartsToMe()
     {
-        return $this->belongsToMany('App\User', 'hearts', 'heart_user_id');
+        return $this->hasMany('App\Heart', 'heart_user_id');
     }
 
     public function haveLikedBook($bookId)

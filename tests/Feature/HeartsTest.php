@@ -183,9 +183,12 @@ class HeartsTest extends TestCase
             ->assertStatus(200)
             ->assertJsonStructure([
                 '*' => [
-                    'id',
-                    'name',
-                    'slug',
+                    'createdAt',
+                    'user' => [
+                        'id',
+                        'name',
+                        'slug',
+                    ],
                     'book' => [
                         'id',
                         'title',
@@ -194,18 +197,16 @@ class HeartsTest extends TestCase
                 ]
             ]);
 
-        $users = $me->user->heartsToMe()->where('have_read', false)->with('book')->get();
+        $this->assertEquals($hearts->count(), count($response->getdata()));
 
-        $this->assertEquals($users->count(), count($response->getdata()));
-
-        foreach ($users as $user) {
+        foreach ($hearts as $heart) {
             $response->assertJsonFragment([
-                'id'   => $user->id,
-                'name' => $user->name,
-                'slug' => $user->slug,
+                'id'   => $heart->user->id,
+                'name' => $heart->user->name,
+                'slug' => $heart->user->slug,
             ]);
 
-            $this->assertNotEmpty($user->book);
+            $this->assertNotEmpty($heart->user->book);
         }
     }
 

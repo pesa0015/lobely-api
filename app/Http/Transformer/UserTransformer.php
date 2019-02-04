@@ -51,8 +51,6 @@ class UserTransformer extends Fractal\TransformerAbstract
 
     public function includeBook(User $user)
     {
-        $book = $user->book->first() ?? $this->book;
-
-        return $this->item($book, new BookTransformer);
+        return $this->item($this->book, new BookTransformer);
     }
 }
