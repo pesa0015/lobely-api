@@ -51,6 +51,18 @@ class UsersTableSeeder extends Seeder
                         'comment' => ucfirst($faker->words(rand(3, 15), true)),
                     ]);
                 }
+
+                $users = Bookshelf::whereNotIn('user_id', $user->heartsToMe()->get()->pluck('user_id')->toArray())->inRandomOrder()->take(1, 3)->get();
+
+                if (!$users->isEmpty()) {
+                    foreach ($users as $heartToUser) {
+                        $user->heartsToPartner()->save(\App\Heart::create([
+                            'user_id' => $user->id,
+                            'heart_user_id' => $heartToUser->user_id,
+                            'book_id' => $heartToUser->book_id
+                        ]));
+                    }
+                }
             }
         });
     }
