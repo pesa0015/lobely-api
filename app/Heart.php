@@ -14,6 +14,11 @@ class Heart extends Model
         'user_id', 'heart_user_id', 'book_id', 'status', 'have_read'
     ];
 
+    public function getCreatedAtAttribute($date)
+    {
+        return \Carbon\Carbon::parse($date)->format('Y-m-d H:i:s');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
