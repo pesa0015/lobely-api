@@ -124,7 +124,7 @@ class HeartsTest extends TestCase
 
         $this->assertEquals($response->getData(), 'have_not_liked_user');
 
-        \App\Heart::create([
+        factory('App\Heart')->create([
             'user_id'       => $user->id,
             'heart_user_id' => $me->user->id,
             'book_id'       => $book->id
@@ -139,13 +139,14 @@ class HeartsTest extends TestCase
         $response = $this->callHttpWithToken('DELETE', 'hearts/' . $user->id, $token);
         $response->assertStatus(200);
 
-        $this->assertDatabaseMissing('hearts', [
+        $this->assertDatabaseHas('hearts', [
             'user_id'       => $user->id,
             'heart_user_id' => $me->user->id,
-            'book_id'       => $book->id
+            'book_id'       => $book->id,
+            'status'        => \App\Constants\HeartStatus::DENIED,
         ]);
 
-        \App\Heart::create([
+        factory('App\Heart')->create([
             'user_id'       => $me->user->id,
             'heart_user_id' => $user->id,
             'book_id'       => $book->id
@@ -163,7 +164,7 @@ class HeartsTest extends TestCase
         $this->assertDatabaseMissing('hearts', [
             'user_id'       => $me->user->id,
             'heart_user_id' => $user->id,
-            'book_id'       => $book->id
+            'book_id'       => \App\Constants\HeartStatus::DENIED,
         ]);
     }
 

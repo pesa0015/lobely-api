@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreHeartRequest;
+use App\Constants\HeartStatus;
 use App\User;
 use App\Heart;
 use App\Book;
@@ -56,7 +57,7 @@ class HeartController extends CustomController
         $fromPartner = $this->user->heartsToMe()->forUser($user->id);
 
         if ($fromPartner->exists()) {
-            $fromPartner->delete();
+            $fromPartner->denied();
 
             return response()->json([], 200);
         }
@@ -64,7 +65,11 @@ class HeartController extends CustomController
         $toPartner = $this->user->heartsToPartner()->forUser($user->id);
 
         if ($toPartner->exists()) {
-            $toPartner->delete();
+            if ($toPartner->status === HeartStatus::PENDING) {
+                $toPartner->delete();
+            } else {
+                $toPartner->denied();
+            }
 
             return response()->json([], 200);
         }
@@ -74,7 +79,10 @@ class HeartController extends CustomController
 
     public function notifications()
     {
-        $hearts = $this->user->heartsToMe()->where('have_read', false)->with('user', 'book')->get();
+        $hearts = $this->user->heartsToMe()->where([
+            'status'    => HeartStatus::PENDING,
+            'have_read' => false,
+        ])->with('user', 'book')->get();
 
         $transformer = new \App\Http\Transformer\HeartTransformer;
 
@@ -85,7 +93,10 @@ class HeartController extends CustomController
 
     public function countNotifications()
     {
-        $count = $this->user->heartsToMe()->where('have_read', false)->count();
+        $count = $this->user->heartsToMe()->where([
+            'status'    => HeartStatus::PENDING,
+            'have_read' => false,
+        ])->count();
 
         return response()->json(['count' => $count]);
     }

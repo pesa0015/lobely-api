@@ -3,13 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Constants\HeartStatus;
 
 class Heart extends Model
 {
-    const STATUS_PENDING  = 0;
-    const STATUS_APPROVED = 1;
-    const STATUS_DENIED   = 2;
-
     protected $fillable = [
         'user_id', 'heart_user_id', 'book_id', 'status', 'have_read'
     ];
@@ -29,8 +26,16 @@ class Heart extends Model
         return $this->belongsTo(Book::class);
     }
 
+    public function denied()
+    {
+        $this->update([
+            'status'    => HeartStatus::DENIED,
+            'have_read' => true,
+        ]);
+    }
+
     public function scopeForUser($query, $userId)
     {
-        return $query->where('heart_user_id', $userId)->orWHere('user_id', $userId);
+        return $query->where('heart_user_id', $userId)->orWHere('user_id', $userId)->first();
     }
 }
