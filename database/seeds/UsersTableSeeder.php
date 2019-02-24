@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\User;
 use App\Bookshelf;
 use App\Book;
+use App\Heart;
 use Faker\Factory;
 
 class UsersTableSeeder extends Seeder
@@ -52,11 +53,19 @@ class UsersTableSeeder extends Seeder
                     ]);
                 }
 
-                $users = Bookshelf::whereNotIn('user_id', $user->heartsToMe()->get()->pluck('user_id')->toArray())->inRandomOrder()->take(1, 3)->get();
+                $users = Bookshelf::whereNotIn('user_id', array_merge(
+                    $user->heartsToMe()->get()->pluck('user_id')->toArray(),
+                    $user->heartsToPartner()->get()->pluck('heart_user_id')->toArray()
+                ))->inRandomOrder()->take(1, 3)->get();
 
                 if (!$users->isEmpty()) {
                     foreach ($users as $heartToUser) {
-                        $user->heartsToPartner()->save(\App\Heart::create([
+                        if ($user->id === $heartToUser->user_id
+                            || Heart::whereColumn('user_id', 'heart_user_id')->exists()) {
+                            continue;
+                        }
+
+                        $user->heartsToPartner()->save(Heart::create([
                             'user_id' => $user->id,
                             'heart_user_id' => $heartToUser->user_id,
                             'book_id' => $heartToUser->book_id
