@@ -7,7 +7,7 @@
             "interested_in_gender": "m",
             "email": "herminia.mccoy88@example.com",
             "profile_img": "https://randomuser.me/api/portraits/women/19.jpg",
-            "birth_date": "10/1/1978",
+            "birth_date": "1978-10-01",
             "password": "derek",
             "books": [
                 {
@@ -25,7 +25,7 @@
             "interested_in_gender": "f",
             "email": "oscar.graves76@example.com",
             "profile_img": "https://randomuser.me/api/portraits/men/17.jpg",
-            "birth_date": "10/6/1983",
+            "birth_date": "1983-10-06",
             "password": "smiles",
             "books": [
                 {
@@ -40,7 +40,7 @@
             "interested_in_gender": "m",
             "email": "yvonne.wade21@example.com",
             "profile_img": "https://randomuser.me/api/portraits/women/19.jpg",
-            "birth_date": "3/3/1981",
+            "birth_date": "1981-03-03",
             "password": "craig",
             "books": [
                 {
@@ -55,7 +55,7 @@
             "interested_in_gender": "m",
             "email": "elsie.west86@example.com",
             "profile_img": "https://randomuser.me/api/portraits/women/40.jpg",
-            "birth_date": "10/1/1978",
+            "birth_date": "1978-10-01",
             "password": "sunflowe",
             "books": [
                 {
@@ -70,7 +70,7 @@
             "interested_in_gender": "f",
             "email": "marshall.gonzales40@example.com",
             "profile_img": "https://randomuser.me/api/portraits/men/26.jpg",
-            "birth_date": "10/5/1982",
+            "birth_date": "1982-10-05",
             "password": "bills",
             "books": [
                 {
@@ -85,7 +85,7 @@
             "interested_in_gender": "m",
             "email": "vivan.shaw13@example.com",
             "profile_img": "https://randomuser.me/api/portraits/women/39.jpg",
-            "birth_date": "2/2/1981",
+            "birth_date": "1981-02-02",
             "password": "windsurf",
             "books": [
                 {
@@ -100,7 +100,7 @@
             "interested_in_gender": "f",
             "email": "edgar.perry45@example.com",
             "profile_img": "https://randomuser.me/api/portraits/men/45.jpg",
-            "birth_date": "12/7/1983",
+            "birth_date": "1983-12-07",
             "password": "3006",
             "books": [
                 {
@@ -118,7 +118,7 @@
             "interested_in_gender": "f",
             "email": "bryan.ward60@example.com",
             "profile_img": "https://randomuser.me/api/portraits/men/84.jpg",
-            "birth_date": "10/6/1979",
+            "birth_date": "1979-10-06",
             "password": "cramps",
             "books": [
                 {
@@ -136,7 +136,7 @@
             "interested_in_gender": "f",
             "email": "harry.reed84@example.com",
             "profile_img": "https://randomuser.me/api/portraits/men/11.jpg",
-            "birth_date": "1/7/1971",
+            "birth_date": "1971-01-07",
             "password": "serpent",
             "books": [
                 {
@@ -154,7 +154,7 @@
             "interested_in_gender": "m",
             "email": "allison.ruiz40@example.com",
             "profile_img": "https://randomuser.me/api/portraits/women/72.jpg",
-            "birth_date": "1/2/1984",
+            "birth_date": "1984-01-02",
             "password": "lassie",
             "books": [
                 {
