@@ -20,7 +20,7 @@ $factory->define(User::class, function (Faker\Generator $faker) {
         'gender'      => array_keys($genders)[$key],
         'interested_in_gender' => array_keys($genders)[!$key],
         'profile_img' => 'https://randomuser.me/api/portraits/' . $genders[$gender] . '/' . rand(0, 100) . '.jpg',
-        'birth_date'  => $faker->dateTimeThisCentury->format('Y-m-d'),
+        'birth_date'  => $faker->dateTimeBetween('-50 years', '-18 years')->format('Y-m-d'),
         'bio'         => $faker->sentences(2, true),
         'password'    => bcrypt('test'),
     ];
