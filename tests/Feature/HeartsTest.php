@@ -185,6 +185,8 @@ class HeartsTest extends TestCase
             ->assertJsonStructure([
                 '*' => [
                     'createdAt',
+                    'status',
+                    'haveRead',
                     'user' => [
                         'id',
                         'name',
