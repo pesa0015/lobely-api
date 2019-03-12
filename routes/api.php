@@ -24,7 +24,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::resource('bookshelfs', 'BookshelfController', ['only' => ['index', 'store', 'update', 'destroy']]);
     Route::get('notifications/count', 'NotificationController@count');
     Route::get('notifications', 'NotificationController@index');
-    Route::resource('hearts', 'HeartController', ['only' => ['store', 'destroy']]);
+    Route::resource('hearts', 'HeartController', ['only' => ['store', 'update', 'destroy']]);
     Route::get('search', 'SearchController@search');
 
     Route::group(['prefix' => 'user'], function () {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreHeartRequest;
+use App\Http\Requests\UpdateHeartRequest;
 use App\Constants\HeartStatus;
 use App\User;
 use App\Heart;
@@ -42,6 +43,35 @@ class HeartController extends CustomController
         ]);
 
         return response()->json([], 200);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateHeartRequest $request, $userId)
+    {
+        $user = User::findOrFail($userId);
+
+        $heartRaw = Heart::where([
+            'user_id' => $user->id,
+            'heart_user_id' => $this->user->id,
+            'status'  => HeartStatus::PENDING
+        ])->firstOrFail();
+
+        $heartRaw->update([
+            'status'    => $request->status,
+            'have_read' => true
+        ]);
+
+        $transformer = new \App\Http\Transformer\HeartTransformer;
+
+        $heart = $this->transform->item($heartRaw, $transformer);
+
+        return response()->json($heart, 200);
     }
 
     /**

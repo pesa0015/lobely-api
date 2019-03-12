@@ -6,9 +6,26 @@ use Tests\TestCase;
 use App\Book;
 use App\Bookshelf;
 use App\User;
+use App\Constants\HeartStatus;
 
 class HeartsTest extends TestCase
 {
+    private function updateHeart($payload)
+    {
+        $me = $this->newUser(true);
+
+        $token = $me->token;
+
+        $user = factory(User::class)->create();
+
+        $heart = factory(\App\Heart::class)->create([
+            'user_id'       => $user->id,
+            'heart_user_id' => $me->user->id,
+        ]);
+
+        return $this->callHttpWithToken('PUT', 'hearts/' . $user->id, $token, $payload);
+    }
+
     /**
      * @group storeHeart
      *
@@ -104,6 +121,102 @@ class HeartsTest extends TestCase
     }
 
     /**
+     * @group updateHeart
+     *
+     */
+    public function testUpdateHeartWithStatusApproved()
+    {
+        $payload = [
+            'status' => HeartStatus::APPROVED
+        ];
+
+        $response = $this->updateHeart($payload);
+
+        $heart = \App\Heart::findOrFail($response->getData()->id);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status'        => $payload['status'],
+            'haveRead'      => true,
+        ]);
+
+        $this->assertDatabaseHas('hearts', [
+            'user_id'       => $heart->user_id,
+            'heart_user_id' => $heart->heart_user_id,
+            'status'        => $payload['status'],
+            'have_read'     => true,
+        ]);
+    }
+
+    /**
+     * @group updateHeart
+     *
+     */
+    public function testUpdateHeartWithStatusDenied()
+    {
+        $payload = [
+            'status' => HeartStatus::DENIED
+        ];
+
+        $response = $this->updateHeart($payload);
+
+        $heart = \App\Heart::findOrFail($response->getData()->id);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status'        => $payload['status'],
+            'haveRead'      => true,
+        ]);
+
+        $this->assertDatabaseHas('hearts', [
+            'user_id'       => $heart->user_id,
+            'heart_user_id' => $heart->heart_user_id,
+            'status'        => $payload['status'],
+            'have_read'     => true,
+        ]);
+    }
+
+    /**
+     * @group updateHeart
+     *
+     */
+    public function testCannotUpdateHeartWithInvalidStatus()
+    {
+        $n = rand(0, 9);
+
+        while (in_array($n, [HeartStatus::APPROVED, HeartStatus::DENIED])) {
+            $n = rand(0, 9);
+        }
+
+        $payload = [
+            'status' => $n
+        ];
+
+        $this->updateHeart($payload)
+            ->assertStatus(422);
+    }
+
+    /**
+     * @group updateHeart
+     *
+     */
+    public function testCannotUpdateHeartIfNotFound()
+    {
+        $me = $this->newUser(true);
+
+        $token = $me->token;
+
+        $user = factory(User::class)->create();
+
+        $payload = [
+            'status' => HeartStatus::APPROVED
+        ];
+
+        $this->callHttpWithToken('PUT', 'hearts/' . $user->id, $token, $payload)
+            ->assertStatus(404);
+    }
+
+    /**
      * @group deleteHeart
      *
      */
@@ -143,7 +256,7 @@ class HeartsTest extends TestCase
             'user_id'       => $user->id,
             'heart_user_id' => $me->user->id,
             'book_id'       => $book->id,
-            'status'        => \App\Constants\HeartStatus::DENIED,
+            'status'        => HeartStatus::DENIED,
         ]);
 
         factory('App\Heart')->create([
@@ -164,7 +277,7 @@ class HeartsTest extends TestCase
         $this->assertDatabaseMissing('hearts', [
             'user_id'       => $me->user->id,
             'heart_user_id' => $user->id,
-            'book_id'       => \App\Constants\HeartStatus::DENIED,
+            'book_id'       => HeartStatus::DENIED,
         ]);
     }
 
