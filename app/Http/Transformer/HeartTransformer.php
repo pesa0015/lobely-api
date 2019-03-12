@@ -14,6 +14,7 @@ class HeartTransformer extends Fractal\TransformerAbstract
     public function transform(Heart $heart)
     {
         return [
+            'id'        => $heart->id,
             'createdAt' => $heart->created_at,
             'status'    => $heart->status,
             'haveRead'  => $heart->have_read,
