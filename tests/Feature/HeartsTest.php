@@ -138,6 +138,12 @@ class HeartsTest extends TestCase
         $response->assertJson([
             'status'        => $payload['status'],
             'haveRead'      => true,
+        ])->assertJsonStructure([
+            'id',
+            'status',
+            'haveRead',
+            'user' => ['id', 'name', 'slug'],
+            'book' => ['id', 'title', 'slug'],
         ]);
 
         $this->assertDatabaseHas('hearts', [
@@ -166,6 +172,12 @@ class HeartsTest extends TestCase
         $response->assertJson([
             'status'        => $payload['status'],
             'haveRead'      => true,
+        ])->assertJsonStructure([
+            'id',
+            'status',
+            'haveRead',
+            'user' => ['id', 'name', 'slug'],
+            'book' => ['id', 'title', 'slug'],
         ]);
 
         $this->assertDatabaseHas('hearts', [

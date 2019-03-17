@@ -69,7 +69,7 @@ class HeartController extends CustomController
 
         $transformer = new \App\Http\Transformer\HeartTransformer;
 
-        $heart = $this->transform->item($heartRaw, $transformer);
+        $heart = $this->transform->item($heartRaw, $transformer, ['user', 'book']);
 
         return response()->json($heart, 200);
     }
