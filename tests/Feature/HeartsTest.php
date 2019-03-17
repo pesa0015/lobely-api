@@ -348,10 +348,32 @@ class HeartsTest extends TestCase
 
         $token = $me->token;
 
-        $hearts = factory(\App\Heart::class, rand(1, 3))->create(['heart_user_id' => $me->user->id]);
+        $hearts = factory('App\Heart', rand(1, 3))->create(['heart_user_id' => $me->user->id]);
+
+        factory('App\Heart', rand(1, 3))->create([
+            'heart_user_id' => $me->user->id,
+            'status' => HeartStatus::APPROVED,
+        ])->each(function ($heart) {
+            $heart->messages()->save(factory('App\Message')->create(['user_id' => $heart->user_id]));
+        });
+
+        $approvedHearts = \App\Heart::where('user_id', $me->user->id)
+            ->orWhere('heart_user_id', $me->user->id)
+            ->where('status', HeartStatus::APPROVED)
+            ->pluck('id')
+            ->toArray();
+
+        $messages = \App\Message::whereIn('heart_id', $approvedHearts)
+            ->whereNot('user_id', $me->user->id)
+            ->where('have_read', false);
 
         $response = $this->callHttpWithToken('GET', 'notifications/count', $token)
             ->assertStatus(200)
-            ->assertJson(['count' => $hearts->count()]);
+            ->assertJson([
+                'count' => [
+                    'hearts'   => $hearts->count(),
+                    'messages' => $messages->count(),
+                ]
+            ]);
     }
 }
