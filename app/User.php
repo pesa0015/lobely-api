@@ -69,6 +69,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Heart', 'heart_user_id');
     }
 
+    public function messages()
+    {
+        return $this->hasMany('App\Message');
+    }
+
     public function haveLikedBook($bookId)
     {
         return $this->books()->where('book_id', $bookId)->exists();

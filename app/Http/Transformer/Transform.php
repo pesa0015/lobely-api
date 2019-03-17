@@ -48,7 +48,7 @@ class Transform
 
         $transformData = new Resource\Collection($rawCollection, $transformer, implode(',', $includes));
 
-        $data = current($this->fractal->createData($transformData)->toArray());
+        $data = $this->fractal->createData($transformData)->toArray();
 
         return $data;
     }

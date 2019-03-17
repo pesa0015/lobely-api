@@ -5,6 +5,7 @@ use App\User;
 use App\Bookshelf;
 use App\Book;
 use App\Heart;
+use App\Constants\HeartStatus;
 use Faker\Factory;
 
 class UsersTableSeeder extends Seeder
@@ -18,6 +19,8 @@ class UsersTableSeeder extends Seeder
     {
         $users = json_decode(file_get_contents(database_path() . '/seeds/Data/Users.json'));
         $faker = Factory::create();
+
+        $heartStatuses = [HeartStatus::PENDING, HeartStatus::APPROVED, HeartStatus::DENIED];
         
         foreach ($users->users as $user) {
             $newUser = User::create([
@@ -42,7 +45,7 @@ class UsersTableSeeder extends Seeder
             }
         }
 
-        factory('App\User', 20)->create()->each(function ($user) use ($faker) {
+        factory('App\User', 20)->create()->each(function ($user) use ($faker, $heartStatuses) {
             if (rand(0, 1)) {
                 $books = Book::whereNotIn('id', $user->books()->get()->pluck('id')->toArray())->inRandomOrder()->take(rand(3, 15))->get();
                 foreach ($books as $book) {
@@ -65,11 +68,24 @@ class UsersTableSeeder extends Seeder
                             continue;
                         }
 
-                        $user->heartsToPartner()->save(Heart::create([
+                        $status = $heartStatuses[rand(0, 2)];
+
+                        $heart = factory('App\Heart')->create([
                             'user_id' => $user->id,
                             'heart_user_id' => $heartToUser->user_id,
-                            'book_id' => $heartToUser->book_id
-                        ]));
+                            'book_id' => $heartToUser->book_id,
+                            'status'  => $status,
+                        ]);
+
+                        $user->heartsToPartner()->save($heart);
+
+                        if ($status === HeartStatus::APPROVED) {
+                            for ($i = 0; $i <= rand(5, 9); $i++) {
+                                $heart->messages()->save(factory('App\Message')->create([
+                                    'user_id' => rand(0, 1) ? $user->id : $heartToUser->user_id,
+                                ]));
+                            }
+                        }
                     }
                 }
             }

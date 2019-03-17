@@ -26,6 +26,11 @@ class Heart extends Model
         return $this->belongsTo(Book::class);
     }
 
+    public function messages()
+    {
+        return $this->hasMany('App\Message');
+    }
+
     public function denied()
     {
         $this->update([

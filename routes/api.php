@@ -25,6 +25,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::get('notifications/count', 'NotificationController@count');
     Route::get('notifications', 'NotificationController@index');
     Route::resource('hearts', 'HeartController', ['only' => ['store', 'update', 'destroy']]);
+    Route::resource('messages', 'MessageController', ['except' => ['create', 'edit', 'show']]);
     Route::get('search', 'SearchController@search');
 
     Route::group(['prefix' => 'user'], function () {
