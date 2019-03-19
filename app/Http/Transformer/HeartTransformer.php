@@ -8,7 +8,7 @@ use App\Heart;
 class HeartTransformer extends Fractal\TransformerAbstract
 {
     protected $availableIncludes = [
-        'user', 'book'
+        'user', 'book', 'messages'
     ];
 
     public function transform(Heart $heart)
@@ -43,5 +43,17 @@ class HeartTransformer extends Fractal\TransformerAbstract
         $book = $heart->book;
 
         return $this->item($book, new BookTransformer);
+    }
+
+    /**
+     * Include messages
+     *
+     * @return League\Fractal\CollectionResource
+     */
+    public function includeMessages(Heart $heart)
+    {
+        $messages = $heart->messages;
+
+        return $this->collection($messages, new MessageTransformer);
     }
 }
