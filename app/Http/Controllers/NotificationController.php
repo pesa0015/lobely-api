@@ -24,17 +24,18 @@ class NotificationController extends CustomController
     public function count()
     {
         $me = 'heart_user_id = ' . $this->user->id;
-        $status = ' AND status = ' . HeartStatus::PENDING;
-        $haveRead = ' AND have_read = 0';
+        $pending = ' AND status = ' . HeartStatus::PENDING;
+        $haveNotRead = ' AND have_read = 0';
 
-        $heartIds = 'heart_id IN (' . implode(',', \App\Heart::where('user_id', $this->user->id)
-            ->orWhere('heart_user_id', $this->user->id)
+        $heartIds = 'heart_id IN (' . implode(',', $this->user->heartsToMe()->orWhere(function () {
+            return $this->user->heartsToPartner()->get();
+        })
             ->where('status', HeartStatus::APPROVED)
             ->pluck('id')
             ->toArray()) . ')';
 
-        $hearts   = 'SELECT COUNT(hearts.id) FROM hearts WHERE ' . $me . $status . $haveRead;
-        $messages = 'SELECT COUNT(messages.id) FROM messages WHERE ' . $heartIds . $haveRead;
+        $hearts   = 'SELECT COUNT(hearts.id) FROM hearts WHERE ' . $me . $pending . $haveNotRead;
+        $messages = 'SELECT COUNT(messages.id) FROM messages WHERE ' . $heartIds . $haveNotRead;
 
         $count = DB::select('SELECT (' . $hearts . ') AS hearts, (' . $messages . ') AS messages')[0];
 
