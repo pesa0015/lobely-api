@@ -34,7 +34,7 @@ class MessagesTest extends TestCase
             ->assertStatus(200)
             ->assertJsonStructure([
                 '*' => [
-                    'id', 'userId', 'body'
+                    'id', 'body', 'createdAt', 'updatedAt'
                 ]
             ]);
     }
@@ -59,8 +59,7 @@ class MessagesTest extends TestCase
         $this->callHttpWithToken('POST', 'messages', $token, $payload)
             ->assertStatus(200)
             ->assertJson([
-                'userId' => $me->user->id,
-                'body'   => $payload['body'],
+                'body' => $payload['body'],
             ]);
 
         $this->assertDatabaseHas('messages', [
@@ -94,8 +93,10 @@ class MessagesTest extends TestCase
         $this->callHttpWithToken('PUT', 'messages/' . $message->id, $token, $payload)
             ->assertStatus(200)
             ->assertJson([
-                'userId' => $me->user->id,
-                'body'   => $payload['body'],
+                'id'        => $message->id,
+                'body'      => $payload['body'],
+                'createdAt' => $message->created_at,
+                'updatedAt' => $message->updated_at,
             ]);
 
         $this->assertDatabaseMissing('messages', [

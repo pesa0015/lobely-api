@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Message extends Model
+class Message extends BaseModel
 {
     protected $fillable = [
         'heart_id',

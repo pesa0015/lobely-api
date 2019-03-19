@@ -2,19 +2,13 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Constants\HeartStatus;
 
-class Heart extends Model
+class Heart extends BaseModel
 {
     protected $fillable = [
         'user_id', 'heart_user_id', 'book_id', 'status', 'have_read'
     ];
-
-    public function getCreatedAtAttribute($date)
-    {
-        return \Carbon\Carbon::parse($date)->format('Y-m-d H:i:s');
-    }
 
     public function user()
     {
