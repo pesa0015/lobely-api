@@ -364,7 +364,7 @@ class HeartsTest extends TestCase
             ->toArray();
 
         $messages = \App\Message::whereIn('heart_id', $approvedHearts)
-            ->whereNot('user_id', $me->user->id)
+            ->where('user_id', '!=', $me->user->id)
             ->where('have_read', false);
 
         $response = $this->callHttpWithToken('GET', 'notifications/count', $token)

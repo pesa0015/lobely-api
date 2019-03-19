@@ -18,7 +18,7 @@ class CreateMessagesTable extends Migration
             $table->integer('heart_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned()->nullable();
             $table->text('body')->nullable();
-            $table->tinyInteger('have_read')->nullable();
+            $table->tinyInteger('have_read')->default(0);
             $table->timestamps();
 
             $table->foreign('heart_id')->references('id')->on('hearts');
