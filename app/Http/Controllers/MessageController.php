@@ -5,27 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Transformer\MessageTransformer;
+use App\Http\Transformer\UserTransformer;
 use App\Heart;
 use App\Message;
 
 class MessageController extends CustomController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
-    {
-        $heart = Heart::findOrFail($request->heartId);
-
-        $messagesRaw = $heart->messages;
-
-        $messages = $this->transform->collection($messagesRaw, new MessageTransformer);
-
-        return response()->json($messages, 200);
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -51,6 +36,29 @@ class MessageController extends CustomController
         $message = $this->transform->item($messageRaw, new MessageTransformer);
 
         return response()->json($message, 200);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $heart = $this->user->heartsToMe()->orWHere(function () {
+            return $this->user->heartsToPartner();
+        })->findOrFail($id);
+
+        $messagesRaw = $heart->messages;
+
+        $messages = $this->transform->collection($messagesRaw, new MessageTransformer);
+
+        $user = $this->transform->item($heart->user, new UserTransformer);
+
+        $data = array_merge(['user' => $user, 'messages' => $messages]);
+
+        return response()->json($data, 200);
     }
 
     /**

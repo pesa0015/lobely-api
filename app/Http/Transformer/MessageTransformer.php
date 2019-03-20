@@ -7,6 +7,10 @@ use App\Message;
 
 class MessageTransformer extends Fractal\TransformerAbstract
 {
+    protected $defaultIncludes = [
+        'user'
+    ];
+
     public function transform(Message $message)
     {
         return [
@@ -15,5 +19,17 @@ class MessageTransformer extends Fractal\TransformerAbstract
             'createdAt' => $message->created_at,
             'updatedAt' => $message->updated_at,
         ];
+    }
+
+    /**
+     * Include user
+     *
+     * @return League\Fractal\CollectionResource
+     */
+    public function includeUser(Message $message)
+    {
+        $user = $message->user;
+
+        return $this->item($user, new UserTransformer);
     }
 }

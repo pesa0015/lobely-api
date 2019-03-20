@@ -7,16 +7,16 @@ use Tests\TestCase;
 class MessagesTest extends TestCase
 {
     /**
-     * @group indexMessages
+     * @group showMessages
      *
      */
-    public function testGetMessages()
+    public function testShowMessages()
     {
         $me = $this->newUser(true);
 
         $token = $me->token;
 
-        $heart = factory('App\Heart')->create();
+        $heart = factory('App\Heart')->create(['heart_user_id' => $me->user->id]);
 
         factory('App\Message', 3)->create([
             'heart_id' => $heart->id,
@@ -30,11 +30,26 @@ class MessagesTest extends TestCase
             'user_id'  => $user->id,
         ]);
 
-        $this->callHttpWithToken('GET', 'messages', $token, ['heartId' => $heart->id])
+        $this->callHttpWithToken('GET', 'messages/' . $heart->id, $token)
             ->assertStatus(200)
             ->assertJsonStructure([
-                '*' => [
-                    'id', 'body', 'createdAt', 'updatedAt'
+                'user' => [
+                    'id',
+                    'name',
+                    'slug',
+                ],
+                'messages' => [
+                    '*' => [
+                        'id',
+                        'body',
+                        'createdAt',
+                        'updatedAt',
+                        'user' => [
+                            'id',
+                            'name',
+                            'slug',
+                        ]
+                    ]
                 ]
             ]);
     }
