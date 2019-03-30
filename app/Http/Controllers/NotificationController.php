@@ -26,6 +26,7 @@ class NotificationController extends CustomController
         $me = 'heart_user_id = ' . $this->user->id;
         $pending = ' AND status = ' . HeartStatus::PENDING;
         $haveNotRead = ' AND have_read = 0';
+        $notMe = ' AND user_id != ' . $this->user->id;
 
         $heartIds = 'heart_id IN (' . implode(',', $this->user->heartsToMe()->orWhere(function () {
             return $this->user->heartsToPartner()->get();
@@ -34,8 +35,11 @@ class NotificationController extends CustomController
             ->pluck('id')
             ->toArray()) . ')';
 
-        $hearts   = 'SELECT COUNT(hearts.id) FROM hearts WHERE ' . $me . $pending . $haveNotRead;
-        $messages = 'SELECT COUNT(messages.id) FROM messages WHERE ' . $heartIds . $haveNotRead;
+        $heartsCount   = 'COUNT(hearts.id)';
+        $messagesCount = 'COUNT(DISTINCT(messages.heart_id))';
+
+        $hearts   = 'SELECT ' . $heartsCount . ' FROM hearts WHERE ' . $me . $pending . $haveNotRead;
+        $messages = 'SELECT ' . $messagesCount . ' FROM messages WHERE ' . $heartIds . $haveNotRead . $notMe;
 
         $count = DB::select('SELECT (' . $hearts . ') AS hearts, (' . $messages . ') AS messages')[0];
 
