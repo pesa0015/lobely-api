@@ -33,6 +33,8 @@ class MessageController extends CustomController
             ]
         ));
 
+        $heart->messages()->where('have_read', false)->update(['have_read' => true]);
+
         $message = $this->transform->item($messageRaw, new MessageTransformer);
 
         return response()->json($message, 200);
@@ -49,6 +51,8 @@ class MessageController extends CustomController
         $heart = $this->user->heartsToMe()->orWHere(function () {
             return $this->user->heartsToPartner();
         })->findOrFail($id);
+
+        $heart->messages()->where('have_read', false)->update(['have_read' => true]);
 
         $messagesRaw = $heart->messages;
 

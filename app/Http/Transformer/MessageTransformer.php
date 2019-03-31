@@ -16,6 +16,7 @@ class MessageTransformer extends Fractal\TransformerAbstract
         return [
             'id'        => $message->id,
             'body'      => $message->body,
+            'haveRead'  => $message->have_read,
             'createdAt' => $message->created_at,
             'updatedAt' => $message->updated_at,
         ];

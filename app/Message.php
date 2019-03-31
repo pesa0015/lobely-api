@@ -11,6 +11,8 @@ class Message extends BaseModel
         'have_read',
     ];
 
+    protected $casts = ['have_read' => 'boolean'];
+
     public function heart()
     {
         return $this->belongsTo('App\Heart');

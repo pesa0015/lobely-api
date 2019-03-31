@@ -30,8 +30,15 @@ class MessagesTest extends TestCase
             'user_id'  => $user->id,
         ]);
 
+        $this->assertDatabaseMissing('messages', [
+            'have_read' => true
+        ]);
+
         $this->callHttpWithToken('GET', 'messages/' . $heart->id, $token)
             ->assertStatus(200)
+            ->assertJsonFragment([
+                'haveRead' => true
+            ])
             ->assertJsonStructure([
                 'user' => [
                     'id',
@@ -52,6 +59,10 @@ class MessagesTest extends TestCase
                     ]
                 ]
             ]);
+
+        $this->assertDatabaseHas('messages', [
+            'have_read' => true
+        ]);
     }
 
     /**
@@ -71,11 +82,19 @@ class MessagesTest extends TestCase
             'body'    => 'test',
         ];
 
+        $this->assertDatabaseMissing('messages', [
+            'have_read' => true
+        ]);
+
         $this->callHttpWithToken('POST', 'messages', $token, $payload)
             ->assertStatus(200)
             ->assertJson([
                 'body' => $payload['body'],
             ]);
+
+        $this->assertDatabaseHas('messages', [
+            'have_read' => true
+        ]);
 
         $this->assertDatabaseHas('messages', [
             'heart_id' => $payload['heartId'],
@@ -104,6 +123,8 @@ class MessagesTest extends TestCase
         $payload = [
             'body' => 'test',
         ];
+
+        $message = $message->fresh();
 
         $this->callHttpWithToken('PUT', 'messages/' . $message->id, $token, $payload)
             ->assertStatus(200)
