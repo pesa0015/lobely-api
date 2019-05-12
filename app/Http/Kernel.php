@@ -53,8 +53,8 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'jwt.auth' => 'Tymon\JWTAuth\Middleware\GetUserFromToken',
+        'jwt.auth' => \App\Http\Middleware\CustomGetUserFromToken::class,
         'jwt.refresh' => 'Tymon\JWTAuth\Middleware\RefreshToken',
-        'getUserFromToken' => \App\Http\Middleware\GetUserFromToken::class,
+        'toUser' => \App\Http\Middleware\ToUser::class,
     ];
 }

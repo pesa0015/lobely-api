@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use JWTAuth;
 
-class GetUserFromToken
+class ToUser
 {
     /**
      * Handle an incoming request.

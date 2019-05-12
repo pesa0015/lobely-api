@@ -130,6 +130,8 @@ class UserTest extends TestCase
      */
     public function testForgotPassword()
     {
+        \Mail::fake();
+        
         $user = factory(User::class)->create([
             'email' => 'peters945@hotmail.com'
         ]);
@@ -151,6 +153,8 @@ class UserTest extends TestCase
      */
     public function testResetPassword()
     {
+        \Mail::fake();
+
         $user = factory(User::class)->create([
             'email' => 'peters945@hotmail.com'
         ]);
