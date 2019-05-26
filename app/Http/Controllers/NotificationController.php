@@ -28,12 +28,12 @@ class NotificationController extends CustomController
         $haveNotRead = ' AND have_read = 0';
         $notMe = ' AND user_id != ' . $this->user->id;
 
-        $heartIds = 'heart_id IN (' . implode(',', $this->user->heartsToMe()->orWhere(function () {
-            return $this->user->heartsToPartner()->get();
-        })
-            ->where('status', HeartStatus::APPROVED)
-            ->pluck('id')
-            ->toArray()) . ')';
+        $approvedHeartsIds = 'SELECT id FROM hearts WHERE'
+            . ' heart_user_id = ' . $this->user->id
+            . ' OR user_id = ' . $this->user->id
+            . ' AND status = ' . HeartStatus::APPROVED;
+
+        $heartIds = 'heart_id IN (' . $approvedHeartsIds . ')';
 
         $heartsCount   = 'COUNT(hearts.id)';
         $messagesCount = 'COUNT(DISTINCT(messages.heart_id))';

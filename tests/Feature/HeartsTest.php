@@ -376,4 +376,24 @@ class HeartsTest extends TestCase
                 ]
             ]);
     }
+
+    /**
+     * @group getCountEmptyNotifications
+     *
+     */
+    public function testGetCountEmptyNotifications()
+    {
+        $me = $this->newUser(true);
+
+        $token = $me->token;
+
+        $response = $this->callHttpWithToken('GET', 'notifications/count', $token)
+            ->assertStatus(200)
+            ->assertJson([
+                'count' => [
+                    'hearts'   => 0,
+                    'messages' => 0,
+                ]
+            ]);
+    }
 }
